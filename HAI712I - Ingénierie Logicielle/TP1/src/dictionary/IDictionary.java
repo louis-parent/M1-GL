@@ -7,5 +7,4 @@ public interface IDictionary
 	public abstract boolean isEmpty();
 	public abstract boolean containsKey(Object key);
 	public abstract int size();
-	public abstract String toString();
 }

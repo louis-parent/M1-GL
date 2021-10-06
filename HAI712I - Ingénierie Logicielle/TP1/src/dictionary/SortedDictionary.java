@@ -63,7 +63,12 @@ public class SortedDictionary extends OrderedDictionary
 
 			for(newIndex = 0; newIndex < this.keys.length; newIndex++)
 			{
-				int compare = this.comparator.compare(oldKeys[oldIndex], key);
+				int compare = 1;
+				
+				if(oldIndex < oldSize)
+				{
+					compare = this.comparator.compare(oldKeys[oldIndex], key);
+				}
 				
 				if(emptyIndex == -1 && compare > 0)
 				{

@@ -26,7 +26,12 @@ public abstract class AbstractDictionary implements IDictionary
 		if(!this.containsKey(key))
 		{
 			int i = this.newIndexOf(key);
-			this.keys[i] = value;
+			this.keys[i] = key;
+			this.values[i] = value;
+		}
+		else
+		{
+			int i = this.indexOf(key);
 			this.values[i] = value;
 		}
 		

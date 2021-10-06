@@ -29,9 +29,9 @@ public class FastDictionary extends AbstractDictionary
 	@Override
 	protected int indexOf(Object key)
 	{
-		int index = key.hashCode() % this.keys.length;
+		int index = Math.abs(key.hashCode()) % this.keys.length;
 		
-		while(index < this.keys.length && this.keys[index] != null)
+		while(this.keys[index] != null)
 		{
 			if(this.keys[index].equals(key))
 			{
@@ -39,7 +39,7 @@ public class FastDictionary extends AbstractDictionary
 			}
 			else
 			{
-				index++;
+				index = (index + 1) % this.keys.length;
 			}
 		}
 		
@@ -54,11 +54,11 @@ public class FastDictionary extends AbstractDictionary
 			this.grow();
 		}
 		
-		int index = key.hashCode() % this.keys.length;
+		int index = Math.abs(key.hashCode()) % this.keys.length;
 		
 		while(this.keys[index] != null)
 		{
-			index++;
+			index = (index + 1) % this.keys.length;
 		}
 		
 		return index;
@@ -66,7 +66,7 @@ public class FastDictionary extends AbstractDictionary
 
 	private boolean mustGrow()
 	{
-		return (this.size() / this.keys.length) > 0.75;
+		return this.size() >= this.keys.length * 0.75;
 	}
 	
 	private void grow()
