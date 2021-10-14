@@ -126,13 +126,12 @@ class UPPNot extends UPPUnOp
 
 	RTLInst toRTL(ArrayList<Pair<String, PRegister>> locals, ArrayList<String> globals, PRegister reg, RTLInst succ)
 	{
-		PRegister reg1 = new PRegister();
-		this.e.toRTL(locals, globals, reg1, new RTLEnd());
-		
+		PRegister reg1 = this.e.getPRegister(locals);
 		PRegister reg2 = new PRegister();
-		new RTLCte(reg2, 0, new RTLEnd());
 		
-		return new RTLEq(reg1, reg2, new RTLCte(reg, 1, succ), new RTLCte(reg, 0, succ));
+		RTLInst eq = new RTLEq(reg1, reg2, new RTLCte(reg, 1, succ), new RTLCte(reg, 0, succ));
+		RTLInst cte = new RTLCte(reg2, 0, eq);
+		return this.e.toRTL(locals, globals, reg1, cte);
 	}// toRTL
 
 }// UPPNot
@@ -234,14 +233,15 @@ class UPPAnd extends UPPBinOp
 	}// UPPAnd
 
 	RTLInst toRTL(ArrayList<Pair<String, PRegister>> locals, ArrayList<String> globals, PRegister reg, RTLInst succ)
-	{
-		PRegister reg1 = new PRegister();
-		this.e1.toRTL(locals, globals, reg1, new RTLEnd());
+	{		
+		PRegister reg1 = this.e1.getPRegister(locals);
+		PRegister reg2 = this.e2.getPRegister(locals);
 		
-		PRegister reg2 = new PRegister();
-		this.e1.toRTL(locals, globals, reg2, new RTLEnd());
+		RTLInst and = new RTLAnd(reg1, reg2, reg, succ);
+		RTLInst opRight = this.e2.toRTL(locals, globals, reg2, and);
+		RTLInst opLeft = this.e1.toRTL(locals, globals, reg1, opRight);
 		
-		return new RTLAnd(reg1, reg2, reg, succ);
+		return opLeft;
 	}// toRTL
 
 }// UPPAnd
@@ -257,13 +257,14 @@ class UPPOr extends UPPBinOp
 
 	RTLInst toRTL(ArrayList<Pair<String, PRegister>> locals, ArrayList<String> globals, PRegister reg, RTLInst succ)
 	{
-		PRegister reg1 = new PRegister();
-		this.e1.toRTL(locals, globals, reg1, new RTLEnd());
+		PRegister reg1 = this.e1.getPRegister(locals);
+		PRegister reg2 = this.e2.getPRegister(locals);
 		
-		PRegister reg2 = new PRegister();
-		this.e1.toRTL(locals, globals, reg2, new RTLEnd());
+		RTLInst and = new RTLOr(reg1, reg2, reg, succ);
+		RTLInst opRight = this.e2.toRTL(locals, globals, reg2, and);
+		RTLInst opLeft = this.e1.toRTL(locals, globals, reg1, opRight);
 		
-		return new RTLOr(reg1, reg2, reg, succ);
+		return opLeft;
 	}// toRTL
 
 }// UPPOr
@@ -442,10 +443,10 @@ class UPPLoad extends UPPExpr
 
 	RTLInst toRTL(ArrayList<Pair<String, PRegister>> locals, ArrayList<String> globals, PRegister reg, RTLInst succ)
 	{
-		PRegister reg1 = new PRegister();
-		this.addr.toRTL(locals, globals, reg, succ);
-		
-		return new RTLLoad(reg1, reg, succ);
+		PRegister reg1 = this.addr.getPRegister(locals);
+		RTLInst load = new RTLLoad(reg1, reg, succ);
+		RTLInst op = this.addr.toRTL(locals, globals, reg1, load);
+		return op;
 	}// toRTL
 
 }// UPPLoad
@@ -536,13 +537,18 @@ class UPPCond extends UPPInst
 
 	RTLInst toRTL(ArrayList<Pair<String, PRegister>> locals, ArrayList<String> globals, RTLInst succ)
 	{
-		PRegister reg1 = new PRegister();
-		this.cond.toRTL(locals, globals, reg1, new RTLEnd());
-		
+		PRegister reg1 = this.cond.getPRegister(locals);
 		PRegister reg2 = new PRegister();
-		new RTLCte(reg2, 1, new RTLEnd());
 		
-		return new RTLEq(reg1, reg1, this.i1.toRTL(locals, globals, succ), this.i2.toRTL(locals, globals, succ));
+		RTLInst trueCase = this.i1.toRTL(locals, globals, succ);
+		RTLInst falseCase = this.i2.toRTL(locals, globals, succ);
+		
+		RTLInst cond = new RTLEq(reg1, reg2, trueCase, falseCase);
+		
+		RTLInst imm = new RTLCte(reg2, 1, cond);
+		
+		
+		return this.cond.toRTL(locals, globals, reg1, imm);
 	}// toRTL
 
 }// UPPCond
@@ -586,14 +592,25 @@ class UPPProcCall extends UPPInst
 	RTLInst toRTL(ArrayList<Pair<String, PRegister>> locals, ArrayList<String> globals, RTLInst succ)
 	{
 		ArrayList<PRegister> args = new ArrayList<PRegister>();
-		for(UPPExpr arg : this.args)
+		RTLInst call = new RTLProcCall(this.callee, args, succ);
+		RTLInst pred = null;
+		
+		for(int i = 0; i < this.args.size(); i++)
 		{
-			PRegister reg = new PRegister();
-			arg.toRTL(locals, globals, reg, new RTLEnd());
-			args.add(reg);
+			UPPExpr arg = this.args.get(i);
+			PRegister reg = arg.getPRegister(locals);
+			
+			if(i == 0)
+			{
+				pred = arg.toRTL(locals, globals, reg, call);
+			}
+			else
+			{
+				pred = arg.toRTL(locals, globals, reg, pred);	
+			}
 		}
 		
-		return new RTLProcCall(this.callee, args, succ);
+		return pred;
 	}// toRTL
 
 }// UPPProcCall

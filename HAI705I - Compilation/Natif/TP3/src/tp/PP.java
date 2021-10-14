@@ -91,7 +91,14 @@ class PPVar extends PPExpr
 
 	UPPExpr toUPP(ArrayList<String> locals)
 	{
-		return new UPPVar(this.name);
+		if(locals.contains(this.name))
+		{
+			return new UPPVar(this.name);
+		}
+		else
+		{
+			return new UPPGVar(this.name);
+		}
 	}// toUPP
 
 }// PPVar
