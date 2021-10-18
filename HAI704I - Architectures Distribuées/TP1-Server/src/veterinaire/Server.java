@@ -12,15 +12,11 @@ public class Server
 {
 	public static void main(String[] args) throws RemoteException
 	{
-		System.setProperty("java.security.policy", "all.policy");
-		System.setProperty("java.rmi.server.codebase", "file:/home/louis/Documents/HAI704I - Architectures Distribuées/TP1-Codebase/bin/");
-		if(System.getSecurityManager() == null)
-			System.setSecurityManager(new SecurityManager());
-		
-		new ClientCustomClass().print();
-		
+		Server.setupSecurity();
+		Server.setupCodebase();
+
 		Registry registry = LocateRegistry.createRegistry(2021);
-		
+
 		if(registry == null)
 		{
 			System.err.println("No registry found");
@@ -31,12 +27,27 @@ public class Server
 			System.out.println("Server started");
 		}
 	}
-	
+
+	private static void setupSecurity()
+	{
+		System.setProperty("java.security.policy", "all.policy");
+
+		if(System.getSecurityManager() == null)
+		{
+			System.setSecurityManager(new SecurityManager());
+		}
+	}
+
+	private static void setupCodebase()
+	{
+		System.setProperty("java.rmi.server.codebase", "file:../TP1-Client/bin/veterinaire/share/");
+	}
+
 	private static Practice createTestPratice() throws RemoteException
 	{
 		Practice practice = new VeterinaryPractice();
 		practice.addPatient(new Dog("Rex", "Louis", "Labrador"));
-		
+
 		return practice;
 	}
 }

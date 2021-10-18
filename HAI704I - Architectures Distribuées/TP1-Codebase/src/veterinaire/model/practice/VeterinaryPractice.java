@@ -29,7 +29,14 @@ public class VeterinaryPractice extends UnicastRemoteObject implements Practice,
 	@Override
 	public Collection<Animal> getPatients() throws RemoteException
 	{
-		return this.patients.values().stream().toList();
+		Set<Animal> animals = new HashSet<Animal>();
+		
+		for(Animal animal : this.patients.values())
+		{
+			animals.add(animal);
+		}
+		
+		return animals;
 	}
 	
 	@Override
