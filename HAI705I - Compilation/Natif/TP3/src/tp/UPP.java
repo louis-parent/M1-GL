@@ -711,28 +711,30 @@ class UPPProc extends UPPDef
 
 	RTLDef toRTL(ArrayList<String> globals)
 	{
-		ArrayList<PRegister> locals = new ArrayList<PRegister>();
-		ArrayList<Pair<String, PRegister>> namedLocals = new ArrayList<Pair<String,PRegister>>();
-		
-		for(String local : this.locals)
-		{
-			PRegister reg = new PRegister();
-			new RTLGetGVar(reg, local, new RTLEnd());
-			
-			locals.add(reg);
-			namedLocals.add(new Pair<String, PRegister>(local, reg));
-		}
-		
 		ArrayList<PRegister> args = new ArrayList<PRegister>();
+		ArrayList<PRegister> locals = new ArrayList<PRegister>();
+		ArrayList<Pair<String, PRegister>> namedLocals = new ArrayList<Pair<String, PRegister>>();
+		
 		for(String arg : this.args)
 		{
 			PRegister reg = new PRegister();
-			new RTLGetGVar(reg, arg, new RTLEnd());
+			Pair<String, PRegister> named = new Pair<String, PRegister>(arg, reg);
+			
 			args.add(reg);
+			locals.add(reg);
+			namedLocals.add(named);
+		}
+		
+		for(String arg : this.locals)
+		{
+			PRegister reg = new PRegister();
+			Pair<String, PRegister> named = new Pair<String, PRegister>(arg, reg);
+
+			locals.add(reg);
+			namedLocals.add(named);
 		}
 		
 		RTLInst body = this.code.toRTL(namedLocals, globals, new RTLEnd());
-		
 		return new RTLProc(this.name, args, locals, body);
 	}// toRTL
 
