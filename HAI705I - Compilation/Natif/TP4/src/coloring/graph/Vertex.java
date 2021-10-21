@@ -3,7 +3,7 @@ package coloring.graph;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Vertex implements Cloneable
+public class Vertex
 {
 	private String name;
 	private Set<String> edges;
@@ -14,6 +14,18 @@ public class Vertex implements Cloneable
 		this.name = name;
 		this.edges = new HashSet<String>();
 		this.color = -1;
+	}
+	
+	public Vertex(Vertex vertex)
+	{
+		this.name = vertex.getName();
+		this.edges = new HashSet<String>();
+		this.color = vertex.color;
+		
+		for(String edge : vertex.getEdges())
+		{
+			this.edges.add(edge);
+		}
 	}
 	
 	public void linkTo(Vertex vertex)
@@ -31,7 +43,7 @@ public class Vertex implements Cloneable
 		return this.name;
 	}
 	
-	public int getEdgesSize()
+	public int getDegree()
 	{
 		return this.getEdges().size();
 	}
@@ -82,11 +94,5 @@ public class Vertex implements Cloneable
 	public boolean equals(Vertex vertex)
 	{
 		return this.getName().equals(vertex.getName());
-	}
-	
-	@Override
-	public Object clone() throws CloneNotSupportedException
-	{
-		return super.clone();
 	}
 }

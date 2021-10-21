@@ -40,20 +40,44 @@ public class Graph
 			Vertex vertex = this.getTriviallyCollarableVertex(colorsAmount);
 			Graph g = this.remove(vertex);
 
-			g.colorize(colorsAmount);
+			g.optimisticColorize(colorsAmount);
 			this.copyColors(g);
 
-			this.colorizeVertext(vertex, colorsAmount);
+			this.colorizeVertex(vertex, colorsAmount);
 		}
 		else if(this.existsNotColorizedVertex())
 		{
 			Vertex vertex = this.getNotColorizedVertex();
 			Graph g = this.remove(vertex);
 
-			g.colorize(colorsAmount);
+			g.optimisticColorize(colorsAmount);
 			this.copyColors(g);
 
 			vertex.spill();
+		}
+	}
+	
+	public void optimisticColorize(int colorsAmount)
+	{
+		if(this.existsTriviallyColorableVertex(colorsAmount))
+		{
+			Vertex vertex = this.getTriviallyCollarableVertex(colorsAmount);
+			Graph g = this.remove(vertex);
+
+			g.optimisticColorize(colorsAmount);
+			this.copyColors(g);
+
+			this.colorizeVertex(vertex, colorsAmount);
+		}
+		else if(this.existsNotColorizedVertex())
+		{
+			Vertex vertex = this.getNotColorizedVertex();
+			Graph g = this.remove(vertex);
+
+			g.optimisticColorize(colorsAmount);
+			this.copyColors(g);
+
+			this.optimisticSpill(vertex, colorsAmount);
 		}
 	}
 
@@ -65,7 +89,11 @@ public class Graph
 		str += this.vertices.stream().map(vertex -> {
 			String vStr = vertex.getName();
 			
-			if(vertex.isColorized())
+			if(vertex.isSpilled())
+			{
+				vStr += "[Spill]";
+			}
+			else if(vertex.isColorized())
 			{
 				vStr += "[" + vertex.getColor() + "]";
 			}
@@ -95,7 +123,7 @@ public class Graph
 	{
 		for(Vertex vertex : this.vertices)
 		{
-			if(vertex.getEdgesSize() < colorsAmount)
+			if(vertex.getDegree() < colorsAmount)
 			{
 				return vertex;
 			}
@@ -131,7 +159,21 @@ public class Graph
 		return null;
 	}
 
-	private void colorizeVertext(Vertex vertex, int colorsAmount)
+	private void colorizeVertex(Vertex vertex, int colorsAmount)
+	{
+		int color = this.getMinimalColor(vertex, colorsAmount);
+		
+		if(color != -1)
+		{
+			vertex.colorize(color);
+		}
+		else
+		{
+			throw new Error("No avalaible color for " + vertex.getName());
+		}
+	}
+
+	private int getMinimalColor(Vertex vertex, int colorsAmount)
 	{
 		Set<Integer> dejaVu = new HashSet<Integer>();
 
@@ -139,23 +181,34 @@ public class Graph
 		{
 			dejaVu.add(this.find(edge).getColor());
 		}
-
+		
 		int color = 0;
 		while(color < colorsAmount && !vertex.isColorized())
 		{
 			if(!dejaVu.contains(color))
 			{
-				vertex.colorize(color);
+				return color;
 			}
 			else
 			{
 				color++;
 			}
 		}
-
-		if(!vertex.isColorized())
+		
+		return -1;
+	}
+	
+	private void optimisticSpill(Vertex vertex, int colorsAmount)
+	{
+		int color = this.getMinimalColor(vertex, colorsAmount);
+		
+		if(color != -1)
 		{
-			throw new Error("No avalaible color for " + vertex.getName());
+			vertex.colorize(color);
+		}
+		else
+		{
+			vertex.spill();
 		}
 	}
 
@@ -166,15 +219,19 @@ public class Graph
 	
 	private Vertex getNotColorizedVertex()
 	{
+		Vertex found = null;
+		int maxDegree = 0;
+		
 		for(Vertex vertex : this.vertices)
 		{
-			if(!vertex.isColorized())
+			if(!vertex.isColorized() && vertex.getDegree() > maxDegree)
 			{
-				return vertex;
+				found = vertex;
+				maxDegree = vertex.getDegree();
 			}
 		}
 		
-		return null;
+		return found;
 	}
 	
 	private Graph remove(Vertex toRemove)
@@ -185,16 +242,9 @@ public class Graph
 		{
 			if(!vertex.equals(toRemove))
 			{
-				try
-				{
-					Vertex clone = (Vertex) vertex.clone();
-					clone.unlinkTo(toRemove);
-					g.add(clone);
-				}
-				catch(CloneNotSupportedException e)
-				{
-					e.printStackTrace();
-				}
+				Vertex clone = new Vertex(vertex);
+				clone.unlinkTo(toRemove);
+				g.add(clone);
 			}
 		}
 		
