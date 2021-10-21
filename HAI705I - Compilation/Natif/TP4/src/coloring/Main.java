@@ -1,5 +1,6 @@
 package coloring;
 
+import coloring.algo.ChaitinColorization;
 import coloring.graph.Graph;
 import coloring.graph.Vertex;
 
@@ -10,8 +11,11 @@ public class Main
 		Graph g = Main.getDiamondGraph();
 		
 		System.out.println(g);
-		g.optimisticColorize(2);
-		System.out.println(g);
+		
+		ChaitinColorization colorization = new ChaitinColorization(g);
+		Graph result = colorization.optimisticColorize(2);
+		
+		System.out.println(result);
 	}
 	
 	private static Graph getOrdinaryGraph()
