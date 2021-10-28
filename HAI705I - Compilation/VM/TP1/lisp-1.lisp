@@ -49,14 +49,83 @@
 					)
 )
 
-(defun concatl (l1 l2) ())
-
-(defun appendl (l1 l2) (if (null (car l2))
-							l1
-							(appendl (cons l1 (car l2)) (cdr l2))
+(defun appendl (l1 l2) (if (null l1)
+							l2
+							(if (listp l1)
+								(cons (car l1) (appendl (cdr l1) l2))
+								l1
+							)
 						)
 )
 
 (appendl (list 1 2 3) (list 4 5 6))
 
-(defun adjoin (x l) (if (null))
+(defun adjoinl (x l) (if (null (car l))
+						x
+						(if (= (car l) x)
+							l
+							(cons (car l) (adjoinl x (cdr l)))
+						)
+					)
+)
+
+(adjoinl 5 (list 1 2 3 4))
+(adjoinl 5 (list 1 5 3 4))
+
+(defun treesize (tree) (if (null tree)
+						0
+						(if (listp tree)
+							(+ 1 (+ (treesize (car tree)) (treesize (cdr tree))))
+							1
+						)
+					)
+)
+
+(treesize (cons (cons (cons 1 2) (cons 3 4)) (cons (cons 5 6) (cons 7 8))))
+
+(defun leafsize (tree) (if (null tree)
+						0
+						(if (listp tree)
+							(+ (leafsize (car tree)) (leafsize (cdr tree)))
+							1
+						)
+					)
+)
+
+(leafsize (cons (cons (cons 1 2) (cons 3 4)) (cons (cons 5 6) (cons 7 8))))
+
+(defun copytree (tree) (if (null tree)
+							()
+							(if (listp tree)
+								(cons (copytree (car tree)) (copytree (cdr tree)))
+								tree
+							)
+						)
+)
+
+(copytree (cons (cons (cons 1 2) (cons 3 4)) (cons (cons 5 6) (cons 7 8))))
+
+(defun substree (x y tree) (if (null tree)
+							()
+							(if (listp tree)
+								(cons (substree x y (car tree)) (substree x y (cdr tree)))
+								(if (= tree x)
+									y
+									tree
+								)
+							)
+						)
+)
+
+(substree 1 2 (cons (cons (cons 1 2) (cons 2 1)) (cons (cons 2 1) (cons 1 2))))
+
+(defun tree-leaves (tree) (if (null tree)
+								()
+								(if (listp tree)
+									(appendl (tree-leaves (car tree)) (tree-leaves (cdr tree)))
+									(cons tree ())
+								)
+							)
+)
+
+(tree-leaves (cons (cons (cons 1 2) (cons 3 4)) (cons (cons 5 6) (cons 7 8))))
