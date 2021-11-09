@@ -1,7 +1,0 @@
-D:\Documents\FAC\M1\TPs\HAI704I - Architectures Distribuées\TP2\TP2-Client\TP2-Client\bin\Debug\TP2-Client.exe.config
-D:\Documents\FAC\M1\TPs\HAI704I - Architectures Distribuées\TP2\TP2-Client\TP2-Client\bin\Debug\TP2-Client.exe
-D:\Documents\FAC\M1\TPs\HAI704I - Architectures Distribuées\TP2\TP2-Client\TP2-Client\bin\Debug\TP2-Client.pdb
-D:\Documents\FAC\M1\TPs\HAI704I - Architectures Distribuées\TP2\TP2-Client\TP2-Client\obj\Debug\TP2-Client.csproj.AssemblyReference.cache
-D:\Documents\FAC\M1\TPs\HAI704I - Architectures Distribuées\TP2\TP2-Client\TP2-Client\obj\Debug\TP2-Client.csproj.CoreCompileInputs.cache
-D:\Documents\FAC\M1\TPs\HAI704I - Architectures Distribuées\TP2\TP2-Client\TP2-Client\obj\Debug\TP2-Client.exe
-D:\Documents\FAC\M1\TPs\HAI704I - Architectures Distribuées\TP2\TP2-Client\TP2-Client\obj\Debug\TP2-Client.pdb
