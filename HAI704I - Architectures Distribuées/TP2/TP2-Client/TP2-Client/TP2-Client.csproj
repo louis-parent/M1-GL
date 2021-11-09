@@ -41,6 +41,9 @@
     <None Include="Connected Services\HotelReference\TP2_Client.HotelReference.HelloWorldResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Connected Services\HotelReference\TP2_Client.HotelReference.MakeReservationResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\HotelReference\TP2_Client.HotelReference.Offer.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

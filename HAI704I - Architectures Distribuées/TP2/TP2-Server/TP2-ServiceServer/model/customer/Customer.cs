@@ -7,10 +7,35 @@ using TP2_Server.model.customer.card;
 
 namespace TP2_Server.model.customer
 {
-    class Customer
+    public class Customer
     {
-        private string firstName;
-        private string lastName;
-        private ISet<CreditCard> cards;
+        public string FirstName
+        {
+            get;
+            set;
+        }
+
+        public string LastName
+        {
+            get;
+            set;
+        }
+
+        public CreditCard Card
+        {
+            get;
+            set;
+        }
+
+        public Customer() : this("", "", null)
+        {
+        }
+
+        public Customer(string firstName, string lastName, CreditCard cards)
+        {
+            this.FirstName = firstName;
+            this.LastName = lastName;
+            this.Card = cards;
+        }
     }
 }

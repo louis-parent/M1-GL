@@ -23,6 +23,14 @@ namespace TP2_Server.model.reservation
         private Customer customer;
         private Room room;
 
+        public Reservation(DateTime start, DateTime end, Customer customer, Room room)
+        {
+            this.Start = start;
+            this.End = end;
+            this.customer = customer;
+            this.room = room;
+        }
+
         public bool Concern(Room room)
         {
             return this.room.Equals(room);

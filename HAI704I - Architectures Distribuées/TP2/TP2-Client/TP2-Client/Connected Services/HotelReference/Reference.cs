@@ -30,6 +30,9 @@ namespace TP2_Client.HotelReference {
         
         private float priceField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private byte[] imageField;
+        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -92,6 +95,173 @@ namespace TP2_Client.HotelReference {
             }
         }
         
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=4)]
+        public byte[] image {
+            get {
+                return this.imageField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.imageField, value) != true)) {
+                    this.imageField = value;
+                    this.RaisePropertyChanged("image");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Customer", Namespace="http://tempuri.org/")]
+    [System.SerializableAttribute()]
+    public partial class Customer : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FirstNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LastNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private TP2_Client.HotelReference.CreditCard CardField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public string FirstName {
+            get {
+                return this.FirstNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FirstNameField, value) != true)) {
+                    this.FirstNameField = value;
+                    this.RaisePropertyChanged("FirstName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public string LastName {
+            get {
+                return this.LastNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LastNameField, value) != true)) {
+                    this.LastNameField = value;
+                    this.RaisePropertyChanged("LastName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
+        public TP2_Client.HotelReference.CreditCard Card {
+            get {
+                return this.CardField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CardField, value) != true)) {
+                    this.CardField = value;
+                    this.RaisePropertyChanged("Card");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CreditCard", Namespace="http://tempuri.org/")]
+    [System.SerializableAttribute()]
+    public partial class CreditCard : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ExpirationDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CVVField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public string Number {
+            get {
+                return this.NumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NumberField, value) != true)) {
+                    this.NumberField = value;
+                    this.RaisePropertyChanged("Number");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string ExpirationDate {
+            get {
+                return this.ExpirationDateField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ExpirationDateField, value) != true)) {
+                    this.ExpirationDateField = value;
+                    this.RaisePropertyChanged("ExpirationDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
+        public string CVV {
+            get {
+                return this.CVVField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CVVField, value) != true)) {
+                    this.CVVField = value;
+                    this.RaisePropertyChanged("CVV");
+                }
+            }
+        }
+        
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         
         protected void RaisePropertyChanged(string propertyName) {
@@ -119,6 +289,13 @@ namespace TP2_Client.HotelReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/FetchAvailableOffers", ReplyAction="*")]
         System.Threading.Tasks.Task<TP2_Client.HotelReference.FetchAvailableOffersResponse> FetchAvailableOffersAsync(TP2_Client.HotelReference.FetchAvailableOffersRequest request);
+        
+        // CODEGEN : La génération du contrat de message depuis le nom d'élément login de l'espace de noms http://tempuri.org/ n'est pas marqué nillable
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/MakeReservation", ReplyAction="*")]
+        TP2_Client.HotelReference.MakeReservationResponse MakeReservation(TP2_Client.HotelReference.MakeReservationRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/MakeReservation", ReplyAction="*")]
+        System.Threading.Tasks.Task<TP2_Client.HotelReference.MakeReservationResponse> MakeReservationAsync(TP2_Client.HotelReference.MakeReservationRequest request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -266,6 +443,86 @@ namespace TP2_Client.HotelReference {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class MakeReservationRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="MakeReservation", Namespace="http://tempuri.org/", Order=0)]
+        public TP2_Client.HotelReference.MakeReservationRequestBody Body;
+        
+        public MakeReservationRequest() {
+        }
+        
+        public MakeReservationRequest(TP2_Client.HotelReference.MakeReservationRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class MakeReservationRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string login;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string password;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+        public int id;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=3)]
+        public TP2_Client.HotelReference.Customer customer;
+        
+        public MakeReservationRequestBody() {
+        }
+        
+        public MakeReservationRequestBody(string login, string password, int id, TP2_Client.HotelReference.Customer customer) {
+            this.login = login;
+            this.password = password;
+            this.id = id;
+            this.customer = customer;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class MakeReservationResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="MakeReservationResponse", Namespace="http://tempuri.org/", Order=0)]
+        public TP2_Client.HotelReference.MakeReservationResponseBody Body;
+        
+        public MakeReservationResponse() {
+        }
+        
+        public MakeReservationResponse(TP2_Client.HotelReference.MakeReservationResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class MakeReservationResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
+        public bool MakeReservationResult;
+        
+        public MakeReservationResponseBody() {
+        }
+        
+        public MakeReservationResponseBody(bool MakeReservationResult) {
+            this.MakeReservationResult = MakeReservationResult;
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface HotelServiceSoapChannel : TP2_Client.HotelReference.HotelServiceSoap, System.ServiceModel.IClientChannel {
     }
@@ -347,6 +604,37 @@ namespace TP2_Client.HotelReference {
             inValue.Body.end = end;
             inValue.Body.persons = persons;
             return ((TP2_Client.HotelReference.HotelServiceSoap)(this)).FetchAvailableOffersAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        TP2_Client.HotelReference.MakeReservationResponse TP2_Client.HotelReference.HotelServiceSoap.MakeReservation(TP2_Client.HotelReference.MakeReservationRequest request) {
+            return base.Channel.MakeReservation(request);
+        }
+        
+        public bool MakeReservation(string login, string password, int id, TP2_Client.HotelReference.Customer customer) {
+            TP2_Client.HotelReference.MakeReservationRequest inValue = new TP2_Client.HotelReference.MakeReservationRequest();
+            inValue.Body = new TP2_Client.HotelReference.MakeReservationRequestBody();
+            inValue.Body.login = login;
+            inValue.Body.password = password;
+            inValue.Body.id = id;
+            inValue.Body.customer = customer;
+            TP2_Client.HotelReference.MakeReservationResponse retVal = ((TP2_Client.HotelReference.HotelServiceSoap)(this)).MakeReservation(inValue);
+            return retVal.Body.MakeReservationResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<TP2_Client.HotelReference.MakeReservationResponse> TP2_Client.HotelReference.HotelServiceSoap.MakeReservationAsync(TP2_Client.HotelReference.MakeReservationRequest request) {
+            return base.Channel.MakeReservationAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<TP2_Client.HotelReference.MakeReservationResponse> MakeReservationAsync(string login, string password, int id, TP2_Client.HotelReference.Customer customer) {
+            TP2_Client.HotelReference.MakeReservationRequest inValue = new TP2_Client.HotelReference.MakeReservationRequest();
+            inValue.Body = new TP2_Client.HotelReference.MakeReservationRequestBody();
+            inValue.Body.login = login;
+            inValue.Body.password = password;
+            inValue.Body.id = id;
+            inValue.Body.customer = customer;
+            return ((TP2_Client.HotelReference.HotelServiceSoap)(this)).MakeReservationAsync(inValue);
         }
     }
 }

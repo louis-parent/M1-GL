@@ -34,6 +34,7 @@
 <ref refid="44bc5f09-3fd4-11ec-bffb-001a7dda7115"/>
 <ref refid="4eac80ee-3fd4-11ec-92d6-001a7dda7115"/>
 <ref refid="556ef4cb-3fd4-11ec-a5c7-001a7dda7115"/>
+<ref refid="69fddbc5-4153-11ec-97dd-001a7dda7115"/>
 </reflist>
 </ownedType>
 </Package>
@@ -69,6 +70,7 @@
 <ref refid="20e098ab-3fd4-11ec-94fc-001a7dda7115"/>
 <ref refid="44351bd2-3fd4-11ec-b15c-001a7dda7115"/>
 <ref refid="551a58f5-3fd4-11ec-8228-001a7dda7115"/>
+<ref refid="69fe0301-4153-11ec-82e3-001a7dda7115"/>
 </reflist>
 </ownedPresentation>
 </Diagram>
@@ -1124,10 +1126,10 @@
 <ref refid="d1684672-3fcf-11ec-8bf1-001a7dda7115"/>
 </type>
 <upperValue>
-<val>*</val>
+<val>1</val>
 </upperValue>
 <upperValue>
-<val>*</val>
+<val>1</val>
 </upperValue>
 </Property>
 <Property id="fd93e7f7-3fcf-11ec-b56f-001a7dda7115">
@@ -1141,10 +1143,10 @@
 <ref refid="8e9103fe-3fcf-11ec-919f-001a7dda7115"/>
 </type>
 <upperValue>
-<val>*</val>
+<val>1</val>
 </upperValue>
 <upperValue>
-<val>*</val>
+<val>1</val>
 </upperValue>
 </Property>
 <Class id="29476a18-3fd0-11ec-9245-001a7dda7115">
@@ -1705,5 +1707,96 @@
 <visibility>
 <val>private</val>
 </visibility>
+</Property>
+<Class id="69fddbc5-4153-11ec-97dd-001a7dda7115">
+<name>
+<val>Offre</val>
+</name>
+<ownedAttribute>
+<reflist>
+<ref refid="76cb4ad8-4153-11ec-aaaa-001a7dda7115"/>
+<ref refid="7cd84a5a-4153-11ec-bf6c-001a7dda7115"/>
+<ref refid="84008def-4153-11ec-8b39-001a7dda7115"/>
+<ref refid="88948c57-4153-11ec-9e07-001a7dda7115"/>
+<ref refid="8dae93e0-4153-11ec-8231-001a7dda7115"/>
+</reflist>
+</ownedAttribute>
+<package>
+<ref refid="7ab521ea-3fcd-11ec-81f7-001a7dda7115"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="69fe0301-4153-11ec-82e3-001a7dda7115"/>
+</reflist>
+</presentation>
+</Class>
+<ClassItem id="69fe0301-4153-11ec-82e3-001a7dda7115">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 1023.0, 650.0)</val>
+</matrix>
+<width>
+<val>201.0</val>
+</width>
+<height>
+<val>128.0</val>
+</height>
+<diagram>
+<ref refid="7ab521eb-3fcd-11ec-a03a-001a7dda7115"/>
+</diagram>
+<subject>
+<ref refid="69fddbc5-4153-11ec-97dd-001a7dda7115"/>
+</subject>
+</ClassItem>
+<Property id="76cb4ad8-4153-11ec-aaaa-001a7dda7115">
+<class_>
+<ref refid="69fddbc5-4153-11ec-97dd-001a7dda7115"/>
+</class_>
+<name>
+<val>id</val>
+</name>
+<typeValue>
+<val>int</val>
+</typeValue>
+</Property>
+<Property id="7cd84a5a-4153-11ec-bf6c-001a7dda7115">
+<class_>
+<ref refid="69fddbc5-4153-11ec-97dd-001a7dda7115"/>
+</class_>
+<name>
+<val>nombrePersonneMax</val>
+</name>
+<typeValue>
+<val>int</val>
+</typeValue>
+</Property>
+<Property id="84008def-4153-11ec-8b39-001a7dda7115">
+<class_>
+<ref refid="69fddbc5-4153-11ec-97dd-001a7dda7115"/>
+</class_>
+<name>
+<val>datePremièreDispo</val>
+</name>
+<typeValue>
+<val>Date</val>
+</typeValue>
+</Property>
+<Property id="88948c57-4153-11ec-9e07-001a7dda7115">
+<class_>
+<ref refid="69fddbc5-4153-11ec-97dd-001a7dda7115"/>
+</class_>
+<name>
+<val>prix</val>
+</name>
+<typeValue>
+<val>float</val>
+</typeValue>
+</Property>
+<Property id="8dae93e0-4153-11ec-8231-001a7dda7115">
+<class_>
+<ref refid="69fddbc5-4153-11ec-97dd-001a7dda7115"/>
+</class_>
+<name>
+<val>+ image: Byte[]</val>
+</name>
 </Property>
 </gaphor>

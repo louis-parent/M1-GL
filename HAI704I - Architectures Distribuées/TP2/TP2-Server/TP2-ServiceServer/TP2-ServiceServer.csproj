@@ -85,6 +85,7 @@
     <Compile Include="model\room\bed\DoubleBed.cs" />
     <Compile Include="model\room\bed\SimpleBed.cs" />
     <Compile Include="model\room\Room.cs" />
+    <Compile Include="OfferCache.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

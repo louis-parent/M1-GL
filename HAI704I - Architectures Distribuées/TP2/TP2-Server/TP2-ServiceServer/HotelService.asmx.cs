@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Services;
 using TP2_Server.model;
 using TP2_Server.model.agency;
+using TP2_Server.model.customer;
 using TP2_Server.model.room;
 using TP2_Server.model.room.bed;
 using TP2_ServiceServer.model.offer;
@@ -21,26 +22,29 @@ namespace TP2_ServiceServer
     // [System.Web.Script.Services.ScriptService]
     public class HotelService : System.Web.Services.WebService
     {
-        private Hotel hotel;
+        private static Hotel hotel;
+        private static OfferCache cache;
 
-        public HotelService()
+        static HotelService()
         {
-            this.hotel = new Hotel("L'Anxova d'Aqui", 5, new Address("8", "Avenue du Miradou", "Collioure", "66190", "Catalogne du nord"), new GPSCoordinate(42.527689, 3.083373));
+            HotelService.hotel = new Hotel("L'Anxova d'Aqui", 5, new Address("8", "Avenue du Miradou", "Collioure", "66190", "Catalogne du nord"), new GPSCoordinate(42.527689, 3.083373));
 
             Room simpleRoom = new Room(66, new IBed[]{ new SimpleBed() });
-            this.hotel.AddRoom(simpleRoom);
+            HotelService.hotel.AddRoom(simpleRoom);
 
             Room familyRoom = new Room(106, new IBed[] { new DoubleBed(), new SimpleBed(), new SimpleBed() });
-            this.hotel.AddRoom(familyRoom);
+            HotelService.hotel.AddRoom(familyRoom);
 
             Room luxuryVIPGoldenPremiumLounge = new Room(666, new IBed[] { new DoubleBed() });
-            this.hotel.AddRoom(luxuryVIPGoldenPremiumLounge);
+            HotelService.hotel.AddRoom(luxuryVIPGoldenPremiumLounge);
 
             Agency agency1 = new Agency("Voyage Voyage", "desireless", "1986");
-            this.hotel.AddPartnership(agency1, 0.98f);
+            HotelService.hotel.AddPartnership(agency1, 0.98f);
 
             Agency agency2 = new Agency("Erwan Aviation", "airone", "r1");
-            this.hotel.AddPartnership(agency2, 1f);
+            HotelService.hotel.AddPartnership(agency2, 1f);
+
+            HotelService.cache = new OfferCache();
         }
 
         [WebMethod]
@@ -52,24 +56,42 @@ namespace TP2_ServiceServer
         [WebMethod]
         public Offer[] FetchAvailableOffers(string login, string password, DateTime start, DateTime end, int persons)
         {
-            Agency agency = this.hotel.IsPartner(login, password);
+            Agency agency = HotelService.hotel.IsPartner(login, password);
 
             if(agency != null)
             {
-                IList<Room> rooms = this.hotel.GetAvailableRooms(start, end, persons);
+                IList<Room> rooms = HotelService.hotel.GetAvailableRooms(start, end, persons);
                 Offer[] offers = new Offer[rooms.Count];
 
                 for (int i = 0; i < rooms.Count; i++)
                 {
                     Room room = rooms[i];
-                    offers[i] = new Offer(i, room.GetPersonMaxAmount(), this.hotel.GetFirstAvailability(room, start), room.Price * this.hotel.GetRateFor(agency));
+                    offers[i] = new Offer(0, room.GetPersonMaxAmount(), HotelService.hotel.GetFirstAvailability(room, start), room.Price * HotelService.hotel.GetRateFor(agency), start, end, room);
                 }
 
+                HotelService.cache.CacheAll(offers);
                 return offers;
             }
             else
             {
                 return new Offer[0];
+            }
+        }
+
+        [WebMethod]
+        public bool MakeReservation(string login, string password, int id, Customer customer)
+        {
+            Agency agency = HotelService.hotel.IsPartner(login, password);
+
+            if (agency != null)
+            {
+                Offer offer = HotelService.cache.Uncache(id);
+                HotelService.hotel.MakeReservation(offer, customer);
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }

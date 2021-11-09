@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace TP2_Server.model.customer.card
 {
-    class CreditCard
+    [Serializable]
+    public class CreditCard
     {
         public string Number
         {

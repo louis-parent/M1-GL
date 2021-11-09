@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TP2_Server.model.agency;
+using TP2_Server.model.customer;
 using TP2_Server.model.reservation;
 using TP2_Server.model.room;
+using TP2_ServiceServer.model.offer;
 
 namespace TP2_Server.model
 {
@@ -168,6 +170,11 @@ namespace TP2_Server.model
             }
 
             return first;
+        }
+
+        public void MakeReservation(Offer offer, Customer customer)
+        {
+            this.reservations.Add(new Reservation(offer.Start, offer.End, customer, offer.OfferedRoom));
         }
     }
 }

@@ -41,8 +41,40 @@
           <s:element minOccurs="1" maxOccurs="1" name="maxPersonAmount" type="s:int" />
           <s:element minOccurs="1" maxOccurs="1" name="availabiltyDate" type="s:dateTime" />
           <s:element minOccurs="1" maxOccurs="1" name="price" type="s:float" />
+          <s:element minOccurs="0" maxOccurs="1" name="image" type="s:base64Binary" />
         </s:sequence>
       </s:complexType>
+      <s:element name="MakeReservation">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="login" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="id" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="customer" type="tns:Customer" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Customer">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Card" type="tns:CreditCard" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CreditCard">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Number" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ExpirationDate" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CVV" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="MakeReservationResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="MakeReservationResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
     </s:schema>
   </wsdl:types>
   <wsdl:message name="HelloWorldSoapIn">
@@ -57,6 +89,12 @@
   <wsdl:message name="FetchAvailableOffersSoapOut">
     <wsdl:part name="parameters" element="tns:FetchAvailableOffersResponse" />
   </wsdl:message>
+  <wsdl:message name="MakeReservationSoapIn">
+    <wsdl:part name="parameters" element="tns:MakeReservation" />
+  </wsdl:message>
+  <wsdl:message name="MakeReservationSoapOut">
+    <wsdl:part name="parameters" element="tns:MakeReservationResponse" />
+  </wsdl:message>
   <wsdl:portType name="HotelServiceSoap">
     <wsdl:operation name="HelloWorld">
       <wsdl:input message="tns:HelloWorldSoapIn" />
@@ -65,6 +103,10 @@
     <wsdl:operation name="FetchAvailableOffers">
       <wsdl:input message="tns:FetchAvailableOffersSoapIn" />
       <wsdl:output message="tns:FetchAvailableOffersSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MakeReservation">
+      <wsdl:input message="tns:MakeReservationSoapIn" />
+      <wsdl:output message="tns:MakeReservationSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="HotelServiceSoap" type="tns:HotelServiceSoap">
@@ -87,6 +129,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="MakeReservation">
+      <soap:operation soapAction="http://tempuri.org/MakeReservation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="HotelServiceSoap12" type="tns:HotelServiceSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -101,6 +152,15 @@
     </wsdl:operation>
     <wsdl:operation name="FetchAvailableOffers">
       <soap12:operation soapAction="http://tempuri.org/FetchAvailableOffers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeReservation">
+      <soap12:operation soapAction="http://tempuri.org/MakeReservation" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
