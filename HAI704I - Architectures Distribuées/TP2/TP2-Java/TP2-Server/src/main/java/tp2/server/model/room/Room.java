@@ -1,25 +1,43 @@
 ﻿package tp2.server.model.room;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.imageio.ImageIO;
 
 import tp2.server.model.room.bed.Bed;
 
 public class Room
 {
 	private float price;
-	private Image photo;
+	private BufferedImage photo;
 	private Set<Bed> beds;
 
 	public Room(float price, Bed[] beds)
 	{
-		this(price, new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB));
+		this(price, "src/main/resources/missing.jpg", beds);
+	}
+	
+	public Room(float price, String photoPath, Bed[] beds)
+	{
+		this(price, (BufferedImage) null);
+		
+		try
+		{
+			this.photo = ImageIO.read(new File(photoPath));
+		}
+		catch(IOException e)
+		{
+			this.photo = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
+		}
+		
 		this.addBeds(beds);
 	}
 
-	public Room(float price, Image photo)
+	public Room(float price, BufferedImage photo)
 	{
 		this.price = price;
 		this.photo = photo;
@@ -56,7 +74,7 @@ public class Room
 		return this.getPersonMaxAmount() >= persons;
 	}
 	
-	public Image getPhoto()
+	public BufferedImage getPhoto()
 	{
 		return this.photo;
 	}

@@ -1,7 +1,5 @@
 ﻿package tp2.server.model.offer;
 
-import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -50,8 +48,6 @@ public class Offer
             this.end = end;
         }
         
-        
-
 		public int getId()
 		{
 			return id;
@@ -117,26 +113,10 @@ public class Offer
 			return end;
 		}
 		
-		private byte[] toByteArray(Image image) throws IOException
+		private byte[] toByteArray(BufferedImage image) throws IOException
 		{
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
-			ImageIO.write(this.toBufferedImage(image), "png", bos);
+			ImageIO.write(image, "jpg", bos);
 			return bos.toByteArray();
-		}
-		
-		private BufferedImage toBufferedImage(Image img)
-		{
-		    if (img instanceof BufferedImage)
-		    {
-		        return (BufferedImage) img;
-		    }
-
-		    BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-
-		    Graphics2D bGr = bimage.createGraphics();
-		    bGr.drawImage(img, 0, 0, null);
-		    bGr.dispose();
-
-		    return bimage;
 		}
     }

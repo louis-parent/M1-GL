@@ -27,13 +27,13 @@ public class ConcreteHotelService implements HotelService
 	{
 		this.hotel = new Hotel("L'Anxova d'Aqui", 5, new Address("8", "Avenue du Miradou", "Collioure", "66190", "Catalogne du nord"), new GPSCoordinate(42.527689, 3.083373));
 
-		Room simpleRoom = new Room(66, new Bed[] { new SimpleBed() });
+		Room simpleRoom = new Room(66, "src/main/resources/cheap.jpg", new Bed[] { new SimpleBed() });
 		this.hotel.addRoom(simpleRoom);
 
-		Room familyRoom = new Room(106, new Bed[] { new DoubleBed(), new SimpleBed(), new SimpleBed() });
+		Room familyRoom = new Room(106, "src/main/resources/family.jpg", new Bed[] { new DoubleBed(), new SimpleBed(), new SimpleBed() });
 		this.hotel.addRoom(familyRoom);
 
-		Room luxuryVIPGoldenPremiumLounge = new Room(666, new Bed[] { new DoubleBed() });
+		Room luxuryVIPGoldenPremiumLounge = new Room(666, "src/main/resources/vip.jpg", new Bed[] { new DoubleBed() });
 		this.hotel.addRoom(luxuryVIPGoldenPremiumLounge);
 
 		Agency agency1 = new Agency("Voyage Voyage", "desireless", "1986");
