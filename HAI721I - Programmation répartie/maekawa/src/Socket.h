@@ -35,6 +35,7 @@ class Socket{
 		size_t receiveData(void* data, size_t length);
 	
 		string getAddress() const;
+		unsigned short getPort() const;
 
         bool equals(const Socket& socket);
 };

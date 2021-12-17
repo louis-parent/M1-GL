@@ -7,19 +7,20 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
 	
-	if(argc < 3)
+	if(argc < 4)
 	{
-		cerr << "Usage : " << argv[0] << " ID, QUORUM [, IP:PORT...] " << endl;
+		cerr << "Usage : " << argv[0] << " SITE PORT, PRIORITY, QUORUM [, IP:PORT...] " << endl;
 		return 1;
 	}
 	else
 	{
-		int siteId = stoi(argv[1]);
-		int quorumId = stoi(argv[2]);
+		int sitePort = stoi(argv[1]);
+		int priority = stoi(argv[2]);
+		int quorumId = stoi(argv[3]);
 		
 		Quorum quorum(quorumId);
 		
-		for(int i = 3; i < argc; i++)
+		for(int i = 4; i < argc; i++)
 		{
 			string site(argv[i]);
 			size_t separatorPos = site.find(":");
@@ -31,7 +32,7 @@ int main(int argc, char* argv[]) {
 			quorum.addSite(address);
 		}
 		
-		Site site(siteId, quorum);
+		Site site(sitePort, quorum, priority);
 	}
 	
 	while(true){}

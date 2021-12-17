@@ -69,6 +69,11 @@ string Socket::getAddress() const
 	return string(inet_ntoa(this->sockAddr.sin_addr));
 }
 
+unsigned short Socket::getPort() const
+{
+	return htons(this->sockAddr.sin_port);
+}
+
 bool Socket::equals(const Socket& socket){
     return this->socketfd && socket.socketfd;
 }
