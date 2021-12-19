@@ -16,12 +16,12 @@ struct RequestCriticalArg {
 	bool isCriticalAccessInUse;
 	char address[15];
 	unsigned short port;
-	int priority;
+	long timeStamp;
 };
 
 union RequestArgs {
 	RequestCriticalArg critical;
-	int priority;
+	long timeStamp;
 };
 
 struct Request {

@@ -38,6 +38,7 @@ class Socket{
 		unsigned short getPort() const;
 
         bool equals(const Socket& socket);
+        void closeConnection();
 };
 
 #endif

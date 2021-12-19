@@ -7,11 +7,11 @@
 #include <utility>
 #include <queue>
 
-typedef pair<SiteAddress, int> SiteWithPriority;
+typedef pair<SiteAddress, long> SiteWithTimeStamp;
 
 class SitePriorityComparison {
 	public:
-	bool operator()(const SiteWithPriority& left, const SiteWithPriority& right) {
+	bool operator()(const SiteWithTimeStamp& left, const SiteWithTimeStamp& right) {
 		return left.second < right.second;
 	}
 }; 
@@ -19,16 +19,15 @@ class SitePriorityComparison {
 class Site {
     private:
         Socket socketServer;
-		int priority;
 
 		Quorum quorum;
-		priority_queue<SiteWithPriority, vector<SiteWithPriority>, SitePriorityComparison> waitingLine;
+		priority_queue<SiteWithTimeStamp, vector<SiteWithTimeStamp>, SitePriorityComparison> waitingLine;
 	
 		unsigned int agreementReceived;
 		bool hasReceivedFail;
 	
 		bool isCriticalAccessInUse;
-		SiteWithPriority siteWithCriticalAccess;
+		SiteWithTimeStamp siteWithCriticalAccess;
 	
 
 		void sendToQuorum(Request request);
@@ -38,16 +37,22 @@ class Site {
 		void subscribeToQuorum();
 	
 		void receiveAddRequest(SiteAddress address);
-		void receiveSyncRequest(bool isCriticalAccessInUse, string address, unsigned short port, int priority);
-		void receiveDemandRequest(SiteAddress address, int priority);
+		void receiveSyncRequest(bool isCriticalAccessInUse, string address, unsigned short port, long timeStamp);
+		void receiveDemandRequest(SiteAddress address, long timeStamp);
+		void receiveAgreementRequest();
+		void receiveFailRequest();
+		void receiveRestitutionRequest();
+		void receiveReleaseRequest(SiteAddress address);
+		void receivePollRequest(SiteAddress address);
+
+		void useCriticalAccess();
 	
     public:
-        Site(unsigned short port, Quorum quorum, int priority);
+        Site(unsigned short port, Quorum quorum);
 
 		void demandCriticalAccess();
 	
 		unsigned short getPort() const;
-        bool equals(Site site);
 	
 		friend void startListening(Site* site);
 		friend void* connectClient(void* context, void* data);

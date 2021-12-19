@@ -3,6 +3,8 @@
 #include <thread>
 #include <arpa/inet.h>
 #include <iostream>
+#include <cerrno>
+
 using namespace std;
 
 Socket::Socket(string addresse, unsigned short port){
@@ -29,6 +31,9 @@ struct sockaddr_in Socket::createSockAddresse(string addresse, unsigned short po
 }
 
 void Socket::startListening(std::function<void* (void*, void*)> func, void* context){
+    int one = 1;
+    setsockopt(this->socketfd, SOL_SOCKET, SO_REUSEADDR, &one, sizeof(one));
+
     bind(this->socketfd, (struct sockaddr*) &this->sockAddr, sizeof(this->sockAddr));
 
     listen(this->socketfd, MAX_CONNECTION);
@@ -43,7 +48,10 @@ void Socket::startListening(std::function<void* (void*, void*)> func, void* cont
 }
 
 void Socket::tryConnect(){
-    connect(this->socketfd, (struct sockaddr*) &this->sockAddr, sizeof(this->sockAddr));
+    int success = connect(this->socketfd, (struct sockaddr*) &this->sockAddr, sizeof(this->sockAddr));
+    if(success == -1){
+        throw runtime_error(strerror(errno));
+    }
 }
 
 void Socket::sendData(const void* data, size_t length) {
@@ -76,4 +84,10 @@ unsigned short Socket::getPort() const
 
 bool Socket::equals(const Socket& socket){
     return this->socketfd && socket.socketfd;
+}
+
+void Socket::closeConnection(){
+    shutdown(this->socketfd, SHUT_RDWR);
+
+    close(this->socketfd);
 }

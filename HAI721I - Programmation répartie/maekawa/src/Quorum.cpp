@@ -1,6 +1,6 @@
 #include "Quorum.h"
 
-Quorum::Quorum(unsigned int id) : id(id) {
+Quorum::Quorum() {
 }
 
 void Quorum::addSite(SiteAddress address){
@@ -24,8 +24,4 @@ size_t Quorum::size() const {
 
 SiteAddress Quorum::getSite(int i) const {
 	return this->sites[i];
-}
-
-bool Quorum::equals(Quorum quorum){
-    return this->id == quorum.id;
 }
