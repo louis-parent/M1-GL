@@ -53,7 +53,8 @@ Allocation / Archivage (S.G.)
 
 *WBS : Work Breakdown Structure*
 
-`| Famille |             | Enfant |
+```text
+| Famille |             | Enfant |
 |---------|  accueille  |--------|
 |   ID    | <---------> |   ID   |
 |  nom    | 1         * |  nom   |
@@ -61,4 +62,5 @@ Allocation / Archivage (S.G.)
 | places  |
 | agréée  |
 |  date   |
-`
+```
+
