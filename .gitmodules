@@ -1,3 +1,3 @@
-[submodule "HAI716I - Programmation orientée agents"]
-	path = HAI716I - Programmation orientée agents
-	url = git@github.com:Kevin-Villaroya/BotBoat.git
+[submodule "LispVM"]
+	path = Semestre 1/HAI705I - Compilation/VM/Projet
+	url = git@github.com:louis-parent/LispVM.git

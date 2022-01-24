@@ -4,7 +4,7 @@
 
 ;remplacer setf pour ne pas avoir a le compiler TODO
 (defun vm_create (vm_name size_memory)
-    (setf (get vm_name 'memory) (make_array size_memory))
+    (setf (get vm_name 'memory) (make-list size_memory))
     (setf (get vm_name 'PC) (* size_memory 0.9))
     (setf (get vm_name 'CP) (* size_memory 0.9))
     (setf (get vm_name 'BP) 0)
@@ -28,7 +28,7 @@
     (setf 
         (get vm_name 'symbols) 
         (append 
-            (get vm_name 'symbols) 
+            (get vm_name 'symbols)
             (vm_load_symbols vm_name (sublist (get vm_name 'memory) (get vm_name 'CP)) 0)
         )
     );création de la liste des symboles présents
@@ -67,14 +67,17 @@
     )
 )
 
-(defun array_set (l index value)
-    (if (null l)
-        '()
-        (if (= index 0)
-            (cons value (cdr l))
-            (cons (car l) (array_set (cdr l) (- index 1) value))
-        )
+(defun array_set (l n value)
+    (setq index n)
+    (setq current l)
+    
+    (loop
+    	(when (<= index 0) (return (setf current value)))
+    	(setq index (- index 1))
+    	(setq current (cdr current))
     )
+    
+    l
 )
 
 (defun array_get (l index)
@@ -94,13 +97,6 @@
             (cadar l)
             (map_get (cdr l) key)
         )
-    )
-)
-
-(defun make_array (size)
-    (if (= size 0)
-        '()
-        (cons NIL (make_array (- size 1)))
     )
 )
 
@@ -217,6 +213,12 @@
                     (write-line " ")
                 )
             ) 
+            ((eql operator 'DUMP)
+                (progn
+                    (write (get vm_name 'memory))
+                    (write-line " ")
+                )
+            ) 
         )
     )
 )
@@ -313,7 +315,56 @@
         (vm_run_push vm_name '(PC));on empile PC
         (vm_run_push vm_name (cons(list ':CONST sp_temp) NIL));on empile SP
         
-        (setf (get vm_name 'PC)(vm_get_adresse_label vm_name (vm_get_address vm_name (car arguments))))
+        (if (map_get (get vm_name 'symbols) (car arguments) )
+            (setf (get vm_name 'PC)(vm_get_adresse_label vm_name (vm_get_address vm_name (car arguments))))
+            (vm_run_lisp_function (car arguments) vm_name arguments)
+        )
+    )
+)
+
+(defun vm_run_lisp_function (func vm_name arguments)
+    (vm_run_move vm_name (list 'FP 'R0))
+    (vm_run_load vm_name (list 'R0 'R0))
+    
+    (let 
+        (
+            (nb_arguments (vm_get_value vm_name 'R0))
+        )
+        
+        (vm_run_move vm_name 
+            (list 
+                (list 
+                    ':CONST 
+                    ( if (eq func 'setf)
+                        (call-setf (car (get_argument_func_lisp vm_name nb_arguments)) (cadr (get_argument_func_lisp vm_name nb_arguments)))
+                        (apply func (get_argument_func_lisp vm_name nb_arguments))
+                    )
+                ) 'R0
+            )
+        )
+        
+        (vm_run_rtn vm_name arguments)
+    )
+)
+
+(defun call-setf (key value) 
+    (eval `(setf ,key ,value))
+)
+
+(defun get_argument_func_lisp (vm_name nb_arguments)
+    (if (= nb_arguments 0)
+        '()
+        (progn
+            (vm_run_move vm_name (list 'FP 'R0))
+            (vm_run_move vm_name (list (list':CONST nb_arguments) 'R1))
+            (vm_run_sub vm_name (list 'R0 'R1))
+            (vm_run_move vm_name (list 'R1 'R0))
+            (vm_run_load vm_name (list 'R0 'R0))
+            (append 
+                (list (vm_get_value vm_name 'R0))
+                (get_argument_func_lisp vm_name (- nb_arguments 1))
+            )
+        )
     )
 )
 
@@ -400,14 +451,14 @@
 )
 
 (defun vm_run_jtrue (vm_name arguments)
-    (if (get vm_name 'FNIL)
+    (if (not (get vm_name 'FNIL))
         (setf (get vm_name 'PC) (vm_get_adresse_label vm_name  (vm_get_address vm_name (car arguments))))
         NIL
     )
 )
 
 (defun vm_run_jnil (vm_name arguments)
-    (if (not (get vm_name 'FNIL))
+    (if  (get vm_name 'FNIL)
         (setf (get vm_name 'PC) (vm_get_adresse_label vm_name  (vm_get_address vm_name (car arguments))))
         NIL
     )
@@ -421,46 +472,12 @@
     (+ (map_get (get vm_name 'symbols) label) (get vm_name 'CP))
 )
 
-(vm_create 'Roger 1000)
+(vm_create 'Roger 10000)
 (vm_load 'Roger '(
-    (JMP main)
-    
-    (LABEL fact)
-    
-    (MOVE FP R0)
-    (MOVE (:CONST -1) R1)
-    (ADD R0 R1)
-    (LOAD R1 R1)
-    
-    (MOVE (:CONST 1) R0)
-    
-    (CMP R1 (:CONST 1))
-    (JEQ RTN_FACT)
-    
-    (MOVE R1 R2)
-    (DECR R2)
-    
-    (PUSH R1)
-    (PUSH R2)
-    (PUSH (:CONST 1))
-    
-    (JSR fact)
-    (POP R1);depiler const 1
-    (POP R1);depiler R2
-    (POP R1);depiler R1
-    (MUL R1 R0)
-    
-    (LABEL RTN_FACT)
-    (RTN)
+	(MOVE (:CONST "Hello World !") R0)
+	(PUSH R0)
+	(PUSH (:CONST 1))
+	(JSR WRITE)
 ))
-(vm_load 'Roger '(
-    (LABEL main)
-    
-    (PUSH (:CONST 5))
-    (PUSH (:CONST 1))
-    (JSR fact)
-    
-    (HALT)
-))
-;(vm_run 'Roger)
-(write (vm_run 'Roger))
+
+(vm_run 'Roger)
