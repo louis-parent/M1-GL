@@ -31,13 +31,15 @@ public class FindVisitor implements StorageVisitor
 	@Override
 	public void visitDirectory(NodeDirectory directory)
 	{
-		
+		if(directory.getName().equals(name))
+		{
+			this.found.add(directory.absoluteAddress());
+		}
 	}
 
 	@Override
 	public void visitRoot(RootDirectory root)
 	{
-		
 	}
 	
 	public Collection<String> getFound()
