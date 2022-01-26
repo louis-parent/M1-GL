@@ -1,5 +1,8 @@
+;=========================COMPILATION INTERNE====================================;
+;Pour compiler du lisp en assembleur, veuillez aller en bas de cette page
+
 (define-condition on-var-never-initialized (error)
-	((message :initarg :message :reader message))
+   ((message :initarg :message :reader message))	
 )
 
 (defun compile_lisp (expressions)
@@ -101,14 +104,14 @@
 	(append 
 		(list 
 			(list 'PUSH (list ':CONST (replace_var_by_environment_offset (car args) environment)))
+		)
+		(append 
+			(compile_lisp_expression (cadr args) environment)
 			(append 
-				(compile_lisp_expression (cadr args) environment)
+				(list (list 'PUSH 'R0))
 				(append 
-					(list (list 'PUSH 'R0))
-					(append 
-						(list (list 'PUSH (list ':CONST 2)))
-						(list (list 'JSR 'setf) '(POP R1) '(POP R1) '(POP R1))
-					)
+					(list (list 'PUSH (list ':CONST 2)))
+					(list (list 'JSR 'setf) '(POP R1) '(POP R1) '(POP R1))
 				)
 			)
 		)
@@ -148,19 +151,19 @@
 
 (defun compile_call_function (operator next environment)
 	(append 
-		(if (is_known_function operator (get '__LISP_COMPILER__ '__GLOBALS__))
-			(compile_known_function operator next environment)
-			(compile_lisp_fonction operator next environment)
-		)
-		(create_pop (+ (size_array next) 1))
-	)
+    	(if (is_known_function operator (get '__LISP_COMPILER__ '__GLOBALS__))
+    		(compile_known_function operator next environment)
+    		(compile_lisp_fonction operator next environment)
+    	)
+    	(create_pop (+ (size_array next) 1))
+    )
 )
 
 (defun create_pop (n)
-	(if (= 0 n)
-		'()
-		(append (create_pop (- n 1)) (list '(POP R1)))
-	)
+    (if (= 0 n)
+        '()
+        (append (create_pop (- n 1)) (list '(POP R1)))
+    )
 )
 
 (defun compile_lisp_fonction (func next environment)
@@ -169,9 +172,21 @@
 			(nb_parameter (size_array next))
 		)
 		
-		(append (compile_args_call_function_lisp next environment)
-		(append (list (list 'PUSH (list ':CONST nb_parameter)))
-		(append (list (list 'JSR func)))))
+		(append 
+		    (compile_args_call_function_lisp next environment)
+		        (append 
+		            (list 
+		                (list 'PUSH 
+		                    (list ':CONST nb_parameter)
+		                )
+		             )
+		            (append 
+		                (list 
+		                    (list 'JSR func)
+		                )
+		            )
+		       )
+		 )
 	)
 )
 
@@ -192,7 +207,7 @@
 	(if (null args)
 		'()
 		(progn
-			(append (compile_lisp_expressions args environment)
+			(append (compile_lisp_expressions (list (car args)) environment)
 			(append (list (list 'PUSH 'R0))
 			(compile_args_call_function (cdr args) environment)))
 		)
@@ -767,6 +782,10 @@
 	)
 )
 
-(compile_lisp '(
-	(write "Hello World !")
-))
+;=========================COMPILATION DU CODE LISP====================================;
+
+(write (compile_lisp '(
+	
+;Ecrire le code lisp ici
+
+)))
