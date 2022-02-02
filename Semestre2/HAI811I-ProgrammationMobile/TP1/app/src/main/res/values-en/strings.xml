@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TP1</string>
+    <string name="information_title">Information</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="age">Age</string>
+    <string name="skill">Skill</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="validate">Validate</string>
+    <string name="information_validation_question">Are you sure to validate these data ?</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="information_sended_toast">Sending information...</string>
+</resources>
