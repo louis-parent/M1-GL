@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Train</string>
+    <string name="where_go">Which travel do you want ?</string>
+    <string name="direct">Direct</string>
+    <string name="changes">Changes</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+</resources>

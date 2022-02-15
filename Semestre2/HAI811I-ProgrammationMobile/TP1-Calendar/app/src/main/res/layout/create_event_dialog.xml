@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/event_description"
+        android:layout_width="0dp"
+        android:layout_height="128dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="@string/description"
+        android:inputType="textMultiLine"
+        app:layout_constraintEnd_toEndOf="@+id/event_title"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="@+id/event_title"
+        app:layout_constraintTop_toBottomOf="@+id/event_title" />
+
+    <EditText
+        android:id="@+id/event_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:hint="@string/title"
+        android:inputType="textShortMessage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/event_time"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="@string/time"
+        android:inputType="textShortMessage"
+        app:layout_constraintEnd_toStartOf="@+id/space"
+        app:layout_constraintStart_toStartOf="@+id/event_description"
+        app:layout_constraintTop_toBottomOf="@+id/event_description" />
+
+    <EditText
+        android:id="@+id/event_location"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="@string/location"
+        android:inputType="textShortMessage"
+        app:layout_constraintEnd_toEndOf="@+id/event_description"
+        app:layout_constraintStart_toEndOf="@+id/space"
+        app:layout_constraintTop_toBottomOf="@+id/event_description" />
+
+    <Space
+        android:id="@+id/space"
+        android:layout_width="16dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/event_time"
+        app:layout_constraintEnd_toEndOf="@+id/event_description"
+        app:layout_constraintStart_toStartOf="@+id/event_description"
+        app:layout_constraintTop_toTopOf="@+id/event_time"
+        app:layout_constraintVertical_bias="0.0" />
+</androidx.constraintlayout.widget.ConstraintLayout>

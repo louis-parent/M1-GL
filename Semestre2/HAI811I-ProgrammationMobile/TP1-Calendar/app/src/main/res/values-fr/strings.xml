@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Calendar</string>
+    <string name="no_event">Pas d\'évènement</string>
+    <string name="description">Description</string>
+    <string name="title">Titre</string>
+    <string name="time">Heure</string>
+    <string name="location">Lieux</string>
+    <string name="create">Créer</string>
+    <string name="cancel">Annuler</string>
+</resources>

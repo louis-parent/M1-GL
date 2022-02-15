@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Train</string>
+    <string name="where_go">Quel voyage souhaitez-vous ?</string>
+    <string name="direct">Direct</string>
+    <string name="changes">Correspondances</string>
+    <string name="from">Départ</string>
+    <string name="to">Arrivé</string>
+</resources>
