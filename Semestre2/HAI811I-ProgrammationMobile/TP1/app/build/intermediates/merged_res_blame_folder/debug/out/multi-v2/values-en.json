@@ -1,0 +1,26 @@
+{
+    "logs": [
+        {
+            "outputFile": "/home/e20170000950/Documents/M1-TPs/Semestre2/HAI811I-ProgrammationMobile/TP1/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-en/values-en.xml",
+            "map": [
+                {
+                    "source": "/home/e20170000950/Documents/M1-TPs/Semestre2/HAI811I-ProgrammationMobile/TP1/app/src/main/res/values-en/strings.xml",
+                    "from": {
+                        "startLines": "6,2,12,11,4,13,3,10,5,8,7,9",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "252,55,570,526,154,612,96,428,204,328,288,382",
+                        "endColumns": "35,40,41,43,49,75,57,97,47,53,39,45",
+                        "endOffsets": "283,91,607,565,199,683,149,521,247,377,323,423"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,91,132,174,218,268,344,402,500,548,602,642",
+                        "endColumns": "35,40,41,43,49,75,57,97,47,53,39,45",
+                        "endOffsets": "86,127,169,213,263,339,397,495,543,597,637,683"
+                    }
+                }
+            ]
+        }
+    ]
+}

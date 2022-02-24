@@ -1,0 +1,82 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="fr.umontpellier.tp1"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="21"
+8-->/home/e20170000950/Documents/M1-TPs/Semestre2/HAI811I-ProgrammationMobile/TP1/app/src/main/AndroidManifest.xml
+9        android:targetSdkVersion="32" />
+9-->/home/e20170000950/Documents/M1-TPs/Semestre2/HAI811I-ProgrammationMobile/TP1/app/src/main/AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.CALL_PHONE" />
+11-->/home/e20170000950/Documents/M1-TPs/Semestre2/HAI811I-ProgrammationMobile/TP1/app/src/main/AndroidManifest.xml:5:5-69
+11-->/home/e20170000950/Documents/M1-TPs/Semestre2/HAI811I-ProgrammationMobile/TP1/app/src/main/AndroidManifest.xml:5:22-66
+12
+13    <application
+13-->/home/e20170000950/Documents/M1-TPs/Semestre2/HAI811I-ProgrammationMobile/TP1/app/src/main/AndroidManifest.xml:7:5-27:19
+14        android:allowBackup="true"
+14-->/home/e20170000950/Documents/M1-TPs/Semestre2/HAI811I-ProgrammationMobile/TP1/app/src/main/AndroidManifest.xml:8:9-35
+15        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+15-->[androidx.core:core:1.7.0] /home/e20170000950/.gradle/caches/transforms-3/46678933633e897331f6cbff7aabb141/transformed/core-1.7.0/AndroidManifest.xml:24:18-86
+16        android:debuggable="true"
+17        android:icon="@mipmap/ic_launcher"
+17-->/home/e20170000950/Documents/M1-TPs/Semestre2/HAI811I-ProgrammationMobile/TP1/app/src/main/AndroidManifest.xml:9:9-43
+18        android:label="@string/app_name"
+18-->/home/e20170000950/Documents/M1-TPs/Semestre2/HAI811I-ProgrammationMobile/TP1/app/src/main/AndroidManifest.xml:10:9-41
+19        android:roundIcon="@mipmap/ic_launcher_round"
+19-->/home/e20170000950/Documents/M1-TPs/Semestre2/HAI811I-ProgrammationMobile/TP1/app/src/main/AndroidManifest.xml:11:9-54
+20        android:supportsRtl="true"
+20-->/home/e20170000950/Documents/M1-TPs/Semestre2/HAI811I-ProgrammationMobile/TP1/app/src/main/AndroidManifest.xml:12:9-35
+21        android:testOnly="true"
+22        android:theme="@style/Theme.TP1" >
+22-->/home/e20170000950/Documents/M1-TPs/Semestre2/HAI811I-ProgrammationMobile/TP1/app/src/main/AndroidManifest.xml:13:9-41
+23        <activity
+23-->/home/e20170000950/Documents/M1-TPs/Semestre2/HAI811I-ProgrammationMobile/TP1/app/src/main/AndroidManifest.xml:14:9-22:20
+24            android:name="fr.umontpellier.tp1.InformationActivity"
+24-->/home/e20170000950/Documents/M1-TPs/Semestre2/HAI811I-ProgrammationMobile/TP1/app/src/main/AndroidManifest.xml:15:13-48
+25            android:exported="true" >
+25-->/home/e20170000950/Documents/M1-TPs/Semestre2/HAI811I-ProgrammationMobile/TP1/app/src/main/AndroidManifest.xml:16:13-36
+26            <intent-filter>
+26-->/home/e20170000950/Documents/M1-TPs/Semestre2/HAI811I-ProgrammationMobile/TP1/app/src/main/AndroidManifest.xml:17:13-21:29
+27                <action android:name="android.intent.action.MAIN" />
+27-->/home/e20170000950/Documents/M1-TPs/Semestre2/HAI811I-ProgrammationMobile/TP1/app/src/main/AndroidManifest.xml:18:17-69
+27-->/home/e20170000950/Documents/M1-TPs/Semestre2/HAI811I-ProgrammationMobile/TP1/app/src/main/AndroidManifest.xml:18:25-66
+28
+29                <category android:name="android.intent.category.LAUNCHER" />
+29-->/home/e20170000950/Documents/M1-TPs/Semestre2/HAI811I-ProgrammationMobile/TP1/app/src/main/AndroidManifest.xml:20:17-77
+29-->/home/e20170000950/Documents/M1-TPs/Semestre2/HAI811I-ProgrammationMobile/TP1/app/src/main/AndroidManifest.xml:20:27-74
+30            </intent-filter>
+31        </activity>
+32        <activity android:name="fr.umontpellier.tp1.ConfirmActivity" />
+32-->/home/e20170000950/Documents/M1-TPs/Semestre2/HAI811I-ProgrammationMobile/TP1/app/src/main/AndroidManifest.xml:24:9-62
+32-->/home/e20170000950/Documents/M1-TPs/Semestre2/HAI811I-ProgrammationMobile/TP1/app/src/main/AndroidManifest.xml:24:19-50
+33        <activity android:name="fr.umontpellier.tp1.ContactActivity" />
+33-->/home/e20170000950/Documents/M1-TPs/Semestre2/HAI811I-ProgrammationMobile/TP1/app/src/main/AndroidManifest.xml:26:9-62
+33-->/home/e20170000950/Documents/M1-TPs/Semestre2/HAI811I-ProgrammationMobile/TP1/app/src/main/AndroidManifest.xml:26:19-50
+34
+35        <provider
+35-->[androidx.emoji2:emoji2:1.0.0] /home/e20170000950/.gradle/caches/transforms-3/76c467336cfde2066e93b5d8011c588c/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:26:9-34:20
+36            android:name="androidx.startup.InitializationProvider"
+36-->[androidx.emoji2:emoji2:1.0.0] /home/e20170000950/.gradle/caches/transforms-3/76c467336cfde2066e93b5d8011c588c/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:27:13-67
+37            android:authorities="fr.umontpellier.tp1.androidx-startup"
+37-->[androidx.emoji2:emoji2:1.0.0] /home/e20170000950/.gradle/caches/transforms-3/76c467336cfde2066e93b5d8011c588c/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:28:13-68
+38            android:exported="false" >
+38-->[androidx.emoji2:emoji2:1.0.0] /home/e20170000950/.gradle/caches/transforms-3/76c467336cfde2066e93b5d8011c588c/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:29:13-37
+39            <meta-data
+39-->[androidx.emoji2:emoji2:1.0.0] /home/e20170000950/.gradle/caches/transforms-3/76c467336cfde2066e93b5d8011c588c/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:31:13-33:52
+40                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+40-->[androidx.emoji2:emoji2:1.0.0] /home/e20170000950/.gradle/caches/transforms-3/76c467336cfde2066e93b5d8011c588c/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:32:17-75
+41                android:value="androidx.startup" />
+41-->[androidx.emoji2:emoji2:1.0.0] /home/e20170000950/.gradle/caches/transforms-3/76c467336cfde2066e93b5d8011c588c/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:33:17-49
+42            <meta-data
+42-->[androidx.lifecycle:lifecycle-process:2.4.0] /home/e20170000950/.gradle/caches/transforms-3/86073857aad360c8a4bae9b934e55cac/transformed/jetified-lifecycle-process-2.4.0/AndroidManifest.xml:31:13-33:52
+43                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+43-->[androidx.lifecycle:lifecycle-process:2.4.0] /home/e20170000950/.gradle/caches/transforms-3/86073857aad360c8a4bae9b934e55cac/transformed/jetified-lifecycle-process-2.4.0/AndroidManifest.xml:32:17-78
+44                android:value="androidx.startup" />
+44-->[androidx.lifecycle:lifecycle-process:2.4.0] /home/e20170000950/.gradle/caches/transforms-3/86073857aad360c8a4bae9b934e55cac/transformed/jetified-lifecycle-process-2.4.0/AndroidManifest.xml:33:17-49
+45        </provider>
+46    </application>
+47
+48</manifest>
