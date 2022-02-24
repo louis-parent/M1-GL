@@ -1,0 +1,788 @@
+\documentclass{beamer}
+\usetheme[faculty=econ]{fibeamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[francais]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+\lstset{
+  language=Java,                
+  basicstyle=\scriptsize,
+  escapeinside={*@}{*@},
+  frame=single,
+  xleftmargin=2mm,
+  xrightmargin=2mm,
+  keepspaces=true,
+  tabsize=2
+}
+
+\newcounter{ctr1}
+\title[]{\Large{Développement d'applications modulaires en Java}}
+\author[C. Tibermacine]{\large{Chouki~Tibermacine}\\
+\small{Chouki.Tibermacine@umontpellier.fr}}
+%\institute{Polytech Montpellier}
+\date{\tiny{}}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\begin{flushright}
+\includegraphics[width=3.5cm]{figs/polytech.png}
+\end{flushright}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Plan de l'ECUE}
+	\begin{enumerate}
+		{\color{gray} \item (Rappels sur le) Développement d'applications Web avec Java
+		\item Modulariser les applications Java avec Spring
+	\item Bien structurer une application Web avec Spring MVC}					
+		\item Auto-configurer une application Web avec Spring Boot
+	{\color{gray}
+		\item Sécuriser une application Web avec Spring Security
+		\item Gérer des données massives avec Apache Kafka et Spring
+		\item Tester une application Web Spring
+		\item Écrire des applications Web (API) réactives avec Spring WebFlux}
+	\end{enumerate}
+\end{frame}
+
+\AtBeginSection[]{% Print an outline at the beginning of sections
+  \begin{frame}<beamer>
+    \frametitle{Plan du cours}
+    % \frametitle{Outline}
+    \tableofcontents[currentsection]
+    % \tableofcontents
+  \end{frame}}
+
+\AtBeginSubsection[]{% Print an outline at the beginning of sections
+  \begin{frame}<beamer>
+    \frametitle{Plan du cours}
+    % \frametitle{Outline}
+    \tableofcontents[currentsubsection]
+    % \tableofcontents
+  \end{frame}}
+
+\section{Introduction à Spring Boot}
+
+\begin{frame}
+  \frametitle{Pourquoi Spring Boot~?}
+  \begin{itemize}
+  \item Pour vous éviter de passer du temps à~:
+  \begin{itemize}
+  	\item définir les dépendances avec le framework Spring (context, web et webmvc) et les bibliothèques associées (Mapping JSON --Jackson, hibernate-validator, Thymeleaf, JUnit, ...)
+  	\item gérer les versions de ces dépendances (parfois, elles ne sont pas compatibles)
+  	\item écrire le code de configuration et de démarrage
+  \end{itemize}
+	\item[] L'équipe Spring Boot a déjà fait les vérifications qu'il faut en ce qui concerne la compatibilité des versions des dépendances
+	\item Pour vous permettre de vous concentrer sur le code \textit{business} de votre application 
+	\item Pour vous permettre d'avoir une app \textit{standalone} (avec un serveur embarqué) pour un déploiement facile sur le Cloud
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{\textit{spring initializr}}
+	\begin{itemize}
+		\item \textit{spring initializr} est accessible ici : \url{https://start.spring.io/}
+		\item Il permet de créer toute la structure d'un projet Spring Boot en quelques clics
+		\item Il permet d'intégrer les dépendances nécessaires à votre application
+		\item[*] Aller sur le site et explorer les dépendances possibles (bouton "\textit{Add Dependencies}")
+		\item Dans le projet généré, il y a une classe annotée par cet outil qui permet de configurer et démarrer l'application 
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Tester \textit{spring initializr}}
+	\begin{itemize}
+		\item Tester l'outil en ligne, en choisissant~:
+		\begin{itemize}
+			\item Gradle, comme type de projet
+			\item Java, comme langage de prog
+			\item La dernière version stable de Spring Boot (2.5.5 ?)
+			\item des méta-données pour votre projet (donner des noms qui correspondent à votre projet IWA)
+			\item Le packaging JAR
+			\item Java : séléctionner la version qui correspond à votre JDK
+			\item comme dépendances : ajouter Spring Web et PostgreSQL
+		\end{itemize}
+	\item Télécharger le projet (un fichier ZIP)
+	\item Décompresser le ZIP et importer le projet dans IntelliJ
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Tester \textit{spring initializr}}
+\begin{itemize}	
+	\item Explorer la structure du projet:
+	
+	\begin{itemize}
+		\item ouvrir le script de build \texttt{build.gradle}. Noter les plugins et les dépendances
+		\item Dans le dossier ``\textit{External Libraries}'', on voit le nombre assez important de bibliothèques téléchargés par Gradle pour vous (un nombre bien plus important que les dépendances dans le script de build)
+		
+		\item ouvrir la classe dans \texttt{src/main/java/...}. C'est une classe exécutable (app \textit{standalone})
+		
+	\end{itemize}
+	\item Pour démarrer l'application, on peut exécuter la classe précédente ou bien, dans les \textit{tasks} Gradle, exécuter \texttt{application/bootRun}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Préparer le terrain pour votre projet IWA}
+	\begin{itemize}
+		\item Créer les sous-packages suivants dans le package de votre app~: \texttt{controllers}, \texttt{models}, \texttt{services} et \texttt{repositories}
+		\item Chaque sous-package contiendra un certain nombre de classes correspondant à la couche en question de l'app
+		\item On reviendra sur ce projet plus tard
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Autres outils}
+	Autres possibilités pour travailler avec Spring Boot~:
+	\begin{itemize}
+\item Créer un nouveau projet sur IntelliJ~:\\ \texttt{File > New > Project... > Spring Initializr}
+\item Installer Spring Boot CLI (Command Line Interface) et tout faire en ligne de commande~:\\
+\footnotesize
+\url{https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-cli.html}
+\normalsize
+\end{itemize}
+\end{frame}
+
+
+
+\section{Spring Boot en action}
+
+\begin{frame}
+  \frametitle{Notion de starter}
+  \begin{itemize}
+  \item Vous l'avez peut-être remarqué. Dans les dépendances déclarés dans le script de build, il y a des starters, sans numéros de versions
+  \item Un starter : un moyen de regrouper des dépendances compatibles et traitant un aspect particulier de l'app (Web, persistance, sécurité, ...)
+  \item Ceci vous permet de ne pas devoir gérer les versions des dépendances (et vérifier leur compatibilité)
+  \item Pour voir les dépendances définies pour chaque starter, ouvrez la vue (Gradle) sur IntelliJ et ensuite \textit{Dependencies}
+  
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Ajouter un nouveau starter}
+	\begin{itemize}
+		\item Dans la section dependencies du script de build, ajouter~:\\
+		\texttt{implementation 'org.springframework.boot:spring-boot-starter-data-jpa'}
+		\item Ceci permet ensuite de se connecter en utilisant JPA (Java Persistence API) à une source de données
+		\item On va utiliser une source de données Postgres. Ajouter donc une autre dépendance~:\\
+		\texttt{implementation 'org.postgresql:postgresql'}
+		
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Créer une source de données}
+	\begin{itemize}
+		\item Pour rendre les données de la base de données Postgres persistantes, au delà de la vie du container Docker, il faudrait créer un volume :
+		\texttt{docker volume create pgdata}
+		
+		\item Créer une source de données : nous allons le faire avec Docker (\texttt{sudo} ou en tant qu'admin Windows):
+\begin{verbatim}
+docker run --rm -P -p 127.0.0.1:5432:5432
+       -v pgdata:/var/lib/postgresql/data
+       -e POSTGRES_PASSWORD="postgres" 
+       -e POSTGRES_USER="postgres" 
+       --name postgres-covid postgres:alpine
+\end{verbatim}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Créer une source de données -suite-}
+	Créer une source de données -suite- : 
+		\begin{itemize}		
+			\item Créer une base de données Postgres nommée \texttt{covid\_alert\_db}~: utiliser le client Postgres que vous voulez. \texttt{psql} ou \texttt{pgAdmin}
+			\item[*] Avec psql~:
+			\begin{itemize}
+				\item Soit via Docker~:\\
+				\footnotesize \texttt{docker exec -it postgres-covid psql -U postgres}
+				\normalsize
+				\item[] Pour quitter le Shell psql~: $\backslash$$q$
+				\item ou bien sur votre OS (avec Postgres déjà installé)~:\\
+				\footnotesize
+			\texttt{psql postgresql://postgres:postgres@localhost:5432/}
+			\normalsize	
+			\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Alimenter la source de données}
+	\begin{itemize}	
+		\item	Ensuite sur le Shell psql :\\
+			\texttt{create database covid\_alert\_db;}
+			\item Y ajouter quelques tables (récupérer le script \texttt{create\_tables.sql} sur Moodle)~:\\
+			- Sur le Shell OS (et non psql)~:
+\begin{verbatim}
+docker cp create_tables_covid.sql
+   postgres-covid:/create_tables.sql
+docker exec -it postgres-covid 
+   psql -d covid_alert_db -f create_tables.sql 
+   -U postgres
+\end{verbatim}
+
+\item[] Nous avons créé dans cette BdD trois tables, une pour les utilisateurs, la seconde pour les localisations géographiques et la dernière pour relier les deux
+\end{itemize}
+\end{frame} 
+
+\begin{frame}[fragile]
+	\frametitle{Se connecter à la source de données}
+	\begin{itemize}
+		\item Le fichier \texttt{application.properties} qui se trouve dans \texttt{src/main/resources} permet de personnaliser l'app et son runtime (changer le numéro de port par exemple)
+		\item Dans ce fichier, il faudra ajouter les propriétés suivantes~:
+		\scriptsize
+\begin{verbatim}
+spring.datasource.url=jdbc:postgresql://localhost:5432/covid_alert_db
+spring.datasource.username=postgres
+spring.datasource.password=postgres
+spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.hibernate.ddl-auto=none
+spring.jackson.serialization.fail-on-empty-beans=false
+\end{verbatim}
+\normalsize
+	\end{itemize}
+\end{frame} 
+
+\begin{frame}[fragile]
+	\frametitle{Ajouter des objets Entity au modèle}
+	\begin{itemize}
+		\item Créer dans le package models une classe User, annotée~:
+		\texttt{@Entity(name="users")\\@Access(AccessType.FIELD)}
+		\item[] \texttt{users}, dans l'annotation ci-dessus, est le nom de la table
+		\item Dans cette classe, ajouter des attributs privés, qui correspondent aux colonnes de la table (soit leur donner le même nom que dans la table, soit leur donner un nom différent (conventions de nommage Java, \textit{Camel Case}), mais dans ce cas, il faudra les annoter
+		\item Annoter l'attribut \texttt{user\_id}~:\\
+\begin{lstlisting}
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+private long user_id;
+\end{lstlisting}
+		
+	\end{itemize}
+\end{frame} 
+
+\begin{frame}[fragile]
+	\frametitle{JPA et Spring}
+	\begin{itemize}
+		\item Générer des getters et des setters aux attributs
+		\item Ajouter une deuxième classe \texttt{Location} pour les objets Entity correspondants aux enregistrements de la table \texttt{locations}
+		\item Nous allons ajouter un attribut \texttt{locations} dans la classe \texttt{User} et l'annoter~:
+\begin{lstlisting}
+@ManyToMany
+@JoinTable(name="user_locations",
+joinColumns = @JoinColumn(name="user_id"),
+inverseJoinColumns = @JoinColumn(name="location_id"))
+private List<Location> locations;
+\end{lstlisting}
+		\item Ajouter un attribut \texttt{users} dans la classe \texttt{Location} et l'annoter~:
+\begin{lstlisting}
+@ManyToMany(mappedBy = "locations")
+@JsonIgnore // Pour ne pas produire des cycles
+private List<User> users;
+\end{lstlisting}
+Ajouter un getter et un setter à chaque attribut
+	\end{itemize}
+\end{frame} 
+
+\begin{frame}[fragile]
+	\frametitle{Définir les \textit{repositories}}
+	\begin{itemize}
+		\item Dans le package, ajouter une interface par classe d'entity~:
+\begin{lstlisting}
+public interface UserRepository 
+       extends JpaRepository<User,Long> { }
+\end{lstlisting}
+\begin{lstlisting}
+public interface LocationRepository 
+       extends JpaRepository<Location,Long> {}
+\end{lstlisting}
+\item Les interfaces sont vides. Elles héritent de plusieurs méthodes CRUD dans les super-interfaces
+	\end{itemize}
+\end{frame} 
+
+\begin{frame}[fragile]
+	\frametitle{Définir les contrôleurs d'API}
+	\begin{itemize}
+		\item Dans le package \texttt{controllers}, nous allons définir des classes annotées \texttt{@RestController} (\texttt{UsersController} et \texttt{LocationsController})
+		\item[*] l'annotation \texttt{@RestController} est l'équivalent de \texttt{@Controller} couplée avec \texttt{@ResponseBody} utilisée pour annoter les méthodes de la classe
+		\item Modifier les classes écrites lors du dernier cours sur Spring MVC
+		\item Cette annotation permet de traiter ces contrôleurs comme des \textit{endpoints} Rest, qui par défaut recevront et retourneront des données au format JSON
+		\item Nous allons annoter ces classes avec \texttt{@RequestMapping("/api/v1/users")} (ex pour la classe \texttt{UsersController})
+		
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Définir les contrôleurs d'API -suite-}
+	\begin{itemize}
+		\item Déclarer un attribut par classe pour référencer le repository. Ex~:
+\begin{lstlisting}
+@Autowired
+private UserRepository userRepository;
+\end{lstlisting}
+		
+		\item Ajouter les méthodes de l'API dans ces classes. Ex~:
+\begin{lstlisting}
+@GetMapping
+public List<User> list() {
+	return userRepository.findAll();
+}
+@GetMapping
+@RequestMapping("{id}")
+public User get(@PathVariable Long id) {
+	return userRepository.getById(id);
+}
+@PostMapping
+@ResponseStatus(HttpStatus.CREATED)
+public User create(@RequestBody final User user) {
+	return  userRepository.saveAndFlush(user);
+}
+\end{lstlisting}
+		
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Les méthodes de l'API}
+	\begin{itemize}
+		\item Les paramètres et les valeurs de retour des méthodes précédentes sont gérés par Spring MVC et la bibliothèque de sérialisation (Jackson, par défaut)
+		\item Ils sont automatiquement sérialisés et désérialisés au format JSON
+		\item Exemple 1~: la méthode \texttt{get(...)} retourne un objet de type \texttt{User}.  Cet objet est automatiquement transformé en donnée JSON avant d'être renvoyée dans la réponse HTTP
+		\item Exemple 2~: le paramètre de la méthode \texttt{create(...)} est injecté par Spring MVC avec un objet construit à partir de la donnée JSON reçue dans le body de la requête HTTP Post
+		\item Tout cela est transparent pour le développeur
+	\end{itemize}
+\end{frame} 
+
+\begin{frame}[fragile]
+	\frametitle{Méthodes \textit{Delete} et \textit{Update}}
+	\begin{itemize}
+		\item Exemple d'une méthode \textit{Delete}~:
+\begin{lstlisting}
+@RequestMapping(value = "{id}",method = RequestMethod.DELETE)
+public void delete(@PathVariable Long id) {
+	// Toujours verifier s'il faut supprimer aussi 
+	// les enregistrements enfants
+	userRepository.deleteById(id);
+}
+\end{lstlisting}	
+\end{itemize}
+\end{frame} 
+
+\begin{frame}[fragile]
+\frametitle{Méthodes \textit{Delete} et \textit{Update} -suite-}
+\begin{itemize}	
+	\item Exemple d'une méthode \textit{Update}~:
+\end{itemize}
+\begin{lstlisting}
+@RequestMapping(value="{id}",method = RequestMethod.PUT)
+public User update(@PathVariable Long id, @RequestBody User user) {
+  // TODO: Ajouter ici une validation si tous 
+  // les champs ont ete passes
+  // Sinon, retourner une erreur 400 (Bad Payload)
+  User existingUser = userRepository.getById(id);
+  BeanUtils.copyProperties(user,existingUser,"user_id");
+  return userRepository.saveAndFlush(existingUser);
+}
+\end{lstlisting}
+Possible d'utiliser \texttt{RequestMethod.PUT} pour une mise à jour de tous les champs et \texttt{RequestMethod.PATCH} pour une MAJ partielle
+\begin{itemize}	
+\item Dernier paramètre de copyProperties - très important. Pourquoi ?
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Tester vos services Rest}
+	\begin{itemize}
+		\item Démarrer l'application~: exécuter la classe avec le main ou la tâche Gradle bootRun
+		\item Pour les méthodes GET, utiliser le navigateur pour envoyer vos requêtes et voir les réponses (vous pouvez utiliser les outils de développement de votre navigateur pour inspecter les requêtes/réponses HTTP)~:
+		\url{http://localhost:8080/api/v1/users/}\\
+		\url{http://localhost:8080/api/v1/users/1}
+		\item Pour les autres méthodes, utiliser curl en ligne de commande ou Postman
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Tester vos services Rest -suite-}
+\begin{itemize}		
+		
+	\item Exemple avec curl pour la méthode POST		
+		\begin{itemize}
+			\item Créer un fichier JSON (user.json) avec les données de la requête~:
+\begin{lstlisting}
+{"first_name":"Mila",
+ "last_name":"No",
+ "email":"mila.no@github.io",
+ "phone_number":"06 62 34 00 99",
+ "password":"123456789"}
+\end{lstlisting}
+			\item Exécuter la commande~: \\ \scriptsize
+			\texttt{curl -d @user.json -H "Content-Type: application/json" -X POST http://localhost:8080/api/v1/users/}
+			\normalsize
+		\end{itemize}
+		
+	\end{itemize}
+\end{frame} 
+
+%\begin{frame}[fragile]
+%	\frametitle{Tester vos services Rest -suite-}
+%	\begin{tikzpicture}[overlay,remember picture]
+%		\node[anchor=center,xshift=0pt,yshift=0pt]
+%		at (current page.center) {
+%			\includegraphics[width=10cm]{img/postman_delete.png}
+%		};
+%	\end{tikzpicture}
+%	\begin{itemize}		
+%		
+%		\item Exemple avec Postman pour la méthode POST		
+%		\item[]\vspace{5cm}
+%	\end{itemize}
+%\end{frame} 
+
+\begin{frame}[fragile]
+	\frametitle{Gestion des erreurs}
+	\begin{itemize}
+		\item Pour éliminer certaines erreurs liées à la sérialisation des objets du modèle, annoter les classes Entity avec~:\\ \footnotesize
+		\texttt{@JsonIgnoreProperties(\{"hibernateLazyInitializer","handler"\})}\\
+		\normalsize
+		\item Essayer d'envoyer une requête GET pour récupérer un \textit{User} ou une localisation (\textit{Location}) inexistante
+		\item Suprise : la réponse est 500 (erreur interne du serveur) et non 404 (ressource non trouvée)
+		\item Pour améliorer votre code~:
+\begin{lstlisting}
+@GetMapping @RequestMapping("{id}")
+public User get(@PathVariable Long id) {
+	if(userRepository.findById(id).isEmpty()) {
+		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User with ID "+id+" not found");
+	}
+	return userRepository.getById(id);
+}
+\end{lstlisting}
+	\end{itemize}
+\end{frame} 
+
+\section{Personnaliser une app Spring Boot}
+
+\begin{frame}[fragile]
+	\frametitle{Sources possibles de configuration}
+\begin{tikzpicture}[overlay,remember picture]
+	\node[anchor=center,xshift=0pt,yshift=0pt]
+	at (current page.center) {
+		\includegraphics[width=12cm]{img/config_spring_boot.png}
+	};
+\end{tikzpicture}
+\end{frame} 
+
+\begin{frame}[fragile]
+	\frametitle{Ordre de précédence dans les sources de configuration}
+	\begin{tikzpicture}[overlay,remember picture]
+		\node[anchor=center,xshift=0pt,yshift=-20pt]
+		at (current page.center) {
+			\includegraphics[width=12cm]{img/ordre_config_sources.png}
+		};
+	\end{tikzpicture}
+\end{frame} 
+
+\begin{frame}[fragile]
+	\frametitle{Recommandations pour les sources de configuration}
+	\begin{itemize}
+	\item Ne pas multiplier le nombre de sources de configuration (utiliser 2 ou 3 max)
+	\item Idéalement, utiliser une source interne (fichier de propriétés de l'application, \texttt{application.properties} vu avant, par ex.) et une source externe (variables d'environnement OS, par ex.)
+	\item Utiliser la source externe  pour les paramètres de config sensibles (mots de passe de connexion, ...) parce que, souvent, les sources internes font partie du code/config de l'application, et sont placées dans des dépôts de code (Git, ...)
+\end{itemize}
+\end{frame} 
+
+\begin{frame}[fragile]
+	\frametitle{Propriétés Spring Boot communes}
+	\begin{itemize}
+		\item Propriétés Spring Boot communes sont listées ici :\\
+		\footnotesize \url{https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html}\\
+		\normalsize
+		A googler (\textit{Spring Boot Common Application properties}) si l'URL ne marche plus
+		\item Exemple : \texttt{server.port} (valeur par défaut 8080)
+		\item Tester le changement de port et redémarrer l'app
+	\end{itemize}
+\end{frame} 
+
+\begin{frame}[fragile]
+	\frametitle{Source externe}
+	\begin{itemize}
+		\item Les paramètres de connexion à la base de données sont au mauvais endroit (\texttt{application.properties}), qui fait partie du code (si c'est sur un dépôt Git, ces paramètres sont rendus accessibles à plus de personnes que ce qu'il faut)
+		\item Nous allons maintenant les sortir de là pour les mettre comme variables d'environnement~:
+\begin{lstlisting}
+spring.datasource.url=${DB_URL}
+spring.datasource.username=${DB_USER}
+spring.datasource.password=${DB_PASSWORD}
+\end{lstlisting}
+	\end{itemize}
+\end{frame} 
+
+\begin{frame}[fragile]
+	\frametitle{Variables d'environnement en Dév}
+	\begin{itemize}
+		\item Sur IntelliJ, il faudrait ouvrir le menu \textit{Run > Edit Configurations} puis \textit{Environment variables}
+		\item Ajouter les 3 variables d'environnement précédentes
+		\item Redémarrer votre app pour tester
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Paramètres de config selon le profil}
+	\begin{itemize}
+		\item Selon si l'on est en "Dev", "Recette", "Prod", ... on est amené à utiliser différentes valeurs pour les paramètres de configuration
+		\item Dans Spring Boot, il est possible de définir des fichiers selon le ``\textbf{profil}'', \texttt{application-\{profil\}.properties}
+		\item Exemples~: \texttt{application-dev.properties}, \texttt{application-prod.properties}, ...
+		\item Ensuite, il faudra indiquer à Spring Boot quel environnement utiliser en paramétrant~:\\
+		 -Dspring.profiles.active=dev\\
+		 Ici, c'est une option de la VM qui a été utilisée (sur IntelliJ, Run > Edit Configuration)
+	\end{itemize}
+\end{frame} 
+
+\begin{frame}[fragile]
+	\frametitle{Exercice}
+	\begin{itemize}
+		\item Ajouter un fichier \texttt{application-prod.properties} dans \texttt{src/main/resources}
+		\item Ajouter dans ce fichier le paramètre~:\\
+		\texttt{logging.level.fr=WARN}\\
+		Ainsi, tous les logs INFO provenant des packages commençant par fr ne seront plus affichés (on est dans un environnement de prod, on veut avoir les logs les plus utiles)
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Fichiers de config YML}
+	\begin{itemize}
+		\item Ce sont des fichiers de config mieux structurés que les .properties (on voit la hiérarchie des paramètres de config)
+		\item Ils sont pris en charge par Spring Boot (même avec des profils)
+		\item Créer un fichier \texttt{application.yml} dans le dossier \texttt{src/main/resources}
+		\item Supprimer la ligne paramétrant le port du serveur du fichier .properties
+		\item Ajouter dans le fichier .yml~:\\
+\begin{lstlisting}
+server:
+  port: 5000	
+\end{lstlisting}
+\item Dans une vraie application, ne pas mélanger .yml et .properties
+	\end{itemize}
+\end{frame} 
+
+\begin{frame}[fragile]
+	\frametitle{Nouvelles propriétés}
+	\begin{itemize}
+		\item Dans le fichier de propriétés d'une application, on a la possibilité de définir nos propres paramètres de config 
+		\item Exemple : \texttt{app.version=1.0.0} 
+		\item Pour récupérer dans le code la valeur de ce paramètre, il suffit de déclarer dans l'un des beans Spring (un contrôleur par ex.) un attribut et demander son injection par la DI Spring~:
+\begin{lstlisting}
+@Value("${app.version}")
+private String appVersion;
+\end{lstlisting} 
+\item Exercice : définir un contrôleur (\texttt{HomeController}) qui fournit un endpoint (méthode annotée par \texttt{@GetMapping} et \texttt{@RequestMapping("/")}) qui retourne un objet Map qui contient la version de l'application 
+	\end{itemize}
+\end{frame} 
+
+\section{Déployer une app Spring Boot}
+
+\begin{frame}[fragile]
+	\frametitle{Architectures \texttt{Containerless}}
+	\begin{itemize}
+		\item Vous l'avez peut-être remarqué, avec Spring Boot, on n'avait pas à gérer un container de servlets ou un serveur d'app (le démarrer, l'arrêter, ...)
+		\item Spring Boot embarque un serveur (Tomcat, par défaut) dans le framework, le démarre pour vous, et y déploie l'application
+		\item C'est ce que l'on appelle une application avec une ``\textit{Containerless Architecture}''
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Modifier le serveur par défaut}
+	\begin{itemize}
+		\item Dans le script de build, ajouter la dépendance vers un autre serveur (ex. Jetty) :
+\begin{lstlisting}
+implementation('org.springframework.boot:spring-boot-starter-jetty')
+\end{lstlisting}
+		\item exclure la dépendance vers \texttt{spring-boot-starter-tomcat}, qui est incluse dans \texttt{spring-boot-starter-web}, mais qui peut être incluse par d'autres dépendances (donc, autant le faire pour tout le projet) ~:
+\begin{lstlisting}
+configurations.implementation {
+	exclude module: "spring-boot-starter-tomcat"
+}
+\end{lstlisting}
+		A placer en dehors de la section \textit{dependencies}		
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Déployer l'app comme un JAR exécutable}
+	\begin{itemize}
+		\item Il est possible d'empaqueter l'application dans un JAR exécutable avec la task \texttt{bootJar} de Gradle
+		\item Ceci permet de générer un fichier .jar dans le dossier \texttt{build/libs}
+		\item Ce jar peut être exécuté ensuite par un simple :\\ \texttt{java -jar votre-projet-version.jar}
+		\item Cela démarre le serveur, déploie l'application, ...
+	\end{itemize}
+\end{frame} 
+
+\begin{frame}
+	\frametitle{Plateformes Cloud}
+	\begin{itemize}
+		\item Voici quelques plateformes pouvant héberger des app Spring Boot~:
+		\begin{itemize}
+			\item Cloud Foundry (CF)
+			\item Heroku
+			\item Google Cloud
+			\item Amazon Web Services
+			\item Microsoft Azur
+		\end{itemize}
+	\item Chacune a ses propres paramètres de config (DATABASE\_URL sur Heroku ou CF par ex., au lieu de DB\_URL en Dév)$\searrow$
+	
+	\item Il faut faire attention, dans le Cloud, la récupération des logs peut être complexe, l'intégration de certains services peut être différente de ce qui a été prévu en Dév, des firewalls peuvent empêcher certains services de communiquer, ...
+	\item Le plus simple est de Dockeriser l'application d'abord
+	\end{itemize}
+\end{frame} 
+
+\begin{frame}
+	\frametitle{Déployer votre app Spring Boot }
+	\begin{itemize}
+		\item Créer un compte gratuit sur Heroku : \url{https://dashboard.heroku.com/apps}\\
+		Vous aurez un espace de 500Mo
+		\item Placer votre application (Covid Alert) dans un dépôt~:
+		\begin{itemize}
+			\item Github
+			\item ou Heroku Git
+			\item[] Pour ce dernier il faudra installer Heroku CLI~: (faites-le, on en a besoin plus loin)\\
+			\url{https://devcenter.heroku.com/articles/heroku-cli\#download-and-install}
+		\end{itemize}   
+		\item Créer une application sur votre compte en ligne Heroku et la lier au dépôt Git
+		\item Déployer l'application (onglet \textit{Deploy})
+\end{itemize}
+\end{frame} 
+
+\begin{frame}
+\frametitle{Déployer votre app Spring Boot sur Heroku}
+\begin{itemize}
+		\item Heroku va détecter que c'est une application Gradle et Spring Boot. Il va installer un JDK et démarrer l'app
+		\item[*] Par défaut, Heroku va utiliser une ancienne version du JDK (8, à la date de création de ce cours). Dans ce JDK l'API de la classe \texttt{Optional<T>} est différente de celle utilisée dans les diapos précédentes. Pour éliminer l'erreur de compil., remplacer \texttt{isEmpty()} dans la classe \texttt{UsersController} par "\texttt{! ... isPresent()}"
+		\item Si pas d'erreurs, cliquer sur le bouton Open app (en haut à droite) 
+		\item Si conflit de port remonté dans les logs de Heroku, définir dans le fichier \texttt{application.properties}~:
+		\texttt{server.port=\$\{PORT:8080\}}
+\end{itemize}
+\end{frame} 
+
+\begin{frame}
+\frametitle{Déployer votre app Spring Boot sur Heroku -suite-}
+\begin{itemize}
+		\item Vous pouvez visualiser les logs, en cliquant sur le bouton \textit{More} puis \textit{View logs}
+		\item Pour suivre la progression du déploiement, aller dans l'onglet \textit{Activity}
+		\item Heroku a dû détecter l'utilisation d'une base de données Postgres (onglet \textit{Resources}). Si ce n'est pas le cas (parfois, à cause d'erreurs lors du déploiement), ajouter dans l'onglet \textit{Resources} un Add-on: Heroku Postgres
+\end{itemize}
+\end{frame} 
+
+\begin{frame}
+\frametitle{Déployer votre app Spring Boot sur Heroku}
+\begin{itemize}		
+		\item Dans l'onglet \textit{Settings}, cliquer sur \textit{Reveal Config Vars} pour voir l'URL de la BdD à utiliser
+		\item Ajouter une nouvelle variable (\texttt{DB\_URL}) avec la valeur de \texttt{DATABASE\_URL}
+		
+		\item Ajouter les tables dans la base. Pour cela, il faudra utiliser Heroku CLI~:\\
+		\texttt{heroku pg:psql <votre-bdd> --app <votre-app-heroku>}
+		\item[] A partir de là, copier/coller les requêtes SQL pour créer les tables et y insérer quelques enregistrements
+\end{itemize}
+\end{frame} 
+
+\begin{frame}
+\frametitle{Déployer votre app Spring Boot sur Heroku}
+\begin{itemize}			
+		\item Attention, avec l'add-on gratuit, le nombre de connexions est limité à 20 sur Postgres (une connexion par déploiement de l'app)
+		\item L'objectif ici est juste de faire fonctionner une première version de votre app sur ce Cloud
+		\item Pour vos projets, on travaillera sur un déploiement local à Polytech sur le PaaS Dokku~: \url{http://cluster-ig5.igpolytech.fr/}
+	\end{itemize}
+\end{frame} 
+
+\begin{frame}
+	\frametitle{Déploiement Containerful (WAR)}
+	\begin{itemize}
+		\item On peut également prévoir un déploiement sous la forme d'un WAR (Web Archive) de l'application
+		\item Contrairement au déploiement JAR avec une architecture containerless (serveur/container embarqué dans le JAR), ici le WAR contient juste l'application
+		\item On suppose que le container sera fourni et que le WAR y sera installé
+\end{itemize}
+\end{frame} 
+
+\begin{frame}
+\frametitle{Déploiement Containerful (WAR) -suite-}
+Très simple à mettre en place~:
+		\begin{itemize}
+			\item sur Gradle, ajouter une dépendance à un serveur (Tomcat, par ex.) et indiquer qu'il a une configuration/scope \texttt{compileOnly}\\
+			Ceci permet de l'exclure du packaging WAR
+			\item modifier la classe qui contient la méthode \texttt{main()} pour étendre la classe \texttt{SpringBootServletInitializer}
+			\item remettre dans les properties les paramètres de config (DB\_URL, ...)
+			\item Exécuter la tâche Gradle de packaging
+			\item Installer le WAR obtenu dans le dossier \texttt{webapps/} d'un Tomcat qui tourne
+		\end{itemize}
+\end{frame} 
+
+\begin{frame}
+	\frametitle{Déploiement avec Docker}
+\begin{itemize}
+	\item Suivre le tutoriel disponible ici~:
+	\url{https://spring.io/guides/gs/spring-boot-docker/}
+	\item Adapter le tutoriel à l'application Covid Alert! pour construire une image Docker
+	\item Déposer sur Moodle le Dockerfile de votre image
+\end{itemize}
+\end{frame} 
+
+%\section{Tester des applications Web avec Spring Boot}
+%% Dernier chapitre du livre "Enterprise Java Microservices"
+%\begin{frame}[fragile]
+%	\frametitle{Un framework pour les tests}
+%	\begin{itemize}
+%		\item \textit{Spring Mock MVC}
+%		\item Il permet de tester une application Web sans devoir démarrer un serveur Web (Spring MVC est mocké)
+%		\item Il permet d'écrire des tests unitaires ou des tests d'intégration
+%		\item Il fournit un grand nombre de classes avec des méthodes statiques (\texttt{MockMvcRequestBuilder} et \texttt{MockMvcResultMatchers})
+%		\item Il s'utilise souvent avec un autre framework de tests (Hamcrest)
+%	\end{itemize}
+%\end{frame} 
+%
+%\begin{frame}
+%	\frametitle{...}
+%	\begin{itemize}
+%		\item ...
+%	\end{itemize}
+%\end{frame} 
+
+\section{Conclusion}
+\begin{frame}
+	\frametitle{\textit{Wrap-up}}
+	\begin{itemize}
+		\item Spring Boot simplifie le développement d'application Web Spring MVC, grâce à ses \textit{initializers} et \textit{starters}
+		\item Il évite de passer du temps dans la configuration d'une application
+		\item Il gère de façon transparente toutes les dépendances \underline{compatibles}		
+		\item Framework personnalisable facilement et pris en charge par les fournisseurs main-stream de Cloud
+	\end{itemize}
+\end{frame} 
+
+\begin{frame}
+	\frametitle{Pour aller plus loin}
+	Organiser son application à micro-services selon le patron \texttt{API Gateway} :
+	\begin{itemize}
+		\item \url{https://medium.com/an-idea/spring-boot-microservices-api-gateway-e9dbcd4bb754}
+		\item \url{https://spring.io/projects/spring-cloud-gateway}
+	\end{itemize}
+\end{frame} 
+
+\begin{frame}
+	\frametitle{Références biblio}
+	\begin{itemize}
+		\item Site Web de Spring Boot~: \url{https://spring.io/projects/spring-boot}
+		\item Tutoriels sur Pluralsight et Baeldung
+		\item Livre sur le sujet~:\\
+		Spring Boot in Action. Craig Walls. Manning Publications. Dec 2015.
+	\end{itemize}
+\end{frame} 
+
+
+\begin{frame}
+	\begin{tikzpicture}[overlay,remember picture]
+		\node[anchor=center,xshift=0pt,yshift=0pt]
+		at (current page.center) {
+			\includegraphics[width=4cm]{img/question.jpg}
+		};
+	\end{tikzpicture}
+\end{frame}
+
+\end{document}

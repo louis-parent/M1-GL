@@ -1,0 +1,103 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[francais]{babel}
+\usepackage{hyperref}
+ \usepackage{amssymb}
+\language=1
+
+\usepackage{listings} 
+
+\usepackage{graphicx}
+
+% Têtes de pages
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\rhead{\thepage}
+\lhead{TP1}
+\chead{Polytech Montpellier}
+\fancyheadoffset{0cm} 
+
+%\leftmargin 1cm
+\textwidth 17.5cm
+\textheight 20cm
+\oddsidemargin 0cm
+\evensidemargin 0cm
+%\topmargin -1.5cm
+\setlength{\unitlength}{1mm}
+\setlength{\parskip}{1.5mm}
+
+\newcommand{\rotri}{~\small{$\blacktriangleright$}~}
+
+\title{Sujet de TP 1\\
+{\large Servlets asynchrones}}
+
+\author{Chouki Tibermacine - \texttt{chouki.tibermacine@umontpellier.fr}}
+\date{}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+
+Mise en place de l'environnement de travail :
+
+\begin{itemize}
+  \item Installer IntelliJ Ultimate edition. Vous avez la possibilité d'avoir une licence gratuite (pas uniquement la licence d'essai d'un mois) si vous entrez votre adresse institutionnelle (@etu.umontpellier.fr)
+  \item Créer un projet Gradle pour une app Java et Web
+  \item Ajouter dans le build le plugin suivant:\\
+  \texttt{id "org.gretty" version "3.0.3"} (prendre la dernière version, si c'est différent)\\
+  Celui-ci nous permettra de démarrer un serveur Web Tomcat ou Jetty et déployer nos applications Web dedans
+  \item[*] Pour ce TP, il nous faudra Tomcat, qui est l'implémentation de référence (implém. complète) de l'API \texttt{javax.servlet}. Du coup, le support des servlets asynchrones y est.
+  \item Ajouter \texttt{jcenter()} dans les repositories si ce n'est pas déjà présent
+\end{itemize}
+
+\section*{Exercice.} 
+\subsection*{Énoncé}
+Écrire une application Web avec une servlet qui exécute une tâche très complexe et trop longue:\\ \texttt{Thread.sleep(10000); // ;-)}  \\
+Après l'exécution de la tâche, la servlet renvoie un message de bienvenue.
+Cette application fournit une page Web sur laquelle un bouton est affiché. Lorsqu'on clique sur le bouton, la tâche est exécutée (par envoi de requête AJAX).
+
+\subsection*{Étapes à suivre}
+Pour commencer, écrire une servlet synchrone qui renvoie le message de bienvenue et tester en cliquant plusieurs fois sur le bouton.
+
+Installer et démarrer VisualVM pour voir le nombre de threads qui sont créés par Tomcat.
+
+Ensuite, écrire une servlet asynchrone et tester aussi.
+
+Enfin, étendre la version avec une servlet asynchrone en vous appuyant sur un pool de 10 threads, créés à l'initialisation du contexte de la servlet dans un listener~:
+
+\begin{lstlisting}
+public class ClientTransfer implements ServletContextListener {
+  private static final int CLIENT_THREAD_COUNT = 10;
+  private final Executor executor =
+   Executors.newFixedThreadPool(CLIENT_THREAD_COUNT);
+  // ...
+
+  public void contextInitialized(ServletContextEvent sce) {
+    int count = 0;
+    while(count < CLIENT_THREAD_COUNT) {
+      executor.execute(()-> {
+       System.out.println("Thread Name-ID: "+
+       Thread.currentThread().getName()+"-"+
+       Thread.currentThread().getId());
+       // ...
+      });
+      count++;
+	}
+  }
+}
+\end{lstlisting}
+
+Cette servlet utilise une file d'attente de type \texttt{BlockingQueue} pour débloquer les threads qui traitent la tâche~:
+\begin{lstlisting}
+private static final BlockingQueue<Client> clients = new LinkedBlockingDeque<>();
+\end{lstlisting}
+
+La méthode \texttt{take()} permet d'obtenir un objet stocké dans la file d'attente. (Ceci est un appel bloquant, si jamais il n'y a pas d'objet dans la file.)
+
+Il nous faudrait ici définir une classe simulant un client. Chaque client doit disposer d'une méthode (\texttt{doWork()}) qui permet d'exécuter la tâche longue.
+
+Pour déclencher l'exécution des tâches, la servlet ajoute un objet Client dans la file de messages (méthode \texttt{add(...)}).
+
+\end{document}
