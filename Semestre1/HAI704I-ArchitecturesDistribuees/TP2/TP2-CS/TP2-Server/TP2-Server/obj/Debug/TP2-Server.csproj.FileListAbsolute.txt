@@ -1,2 +1,0 @@
-D:\Documents\FAC\M1\TPs\HAI704I - Architectures Distribuées\TP2\TP2-Server\TP2-Server\obj\Debug\TP2-Server.csproj.AssemblyReference.cache
-D:\Documents\FAC\M1\TPs\HAI704I - Architectures Distribuées\TP2\TP2-Server\TP2-Server\obj\Debug\TP2-Server.csproj.CoreCompileInputs.cache

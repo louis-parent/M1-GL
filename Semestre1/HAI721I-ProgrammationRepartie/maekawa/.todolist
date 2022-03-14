@@ -1,4 +1,0 @@
-Creation d'une topologie initiale fixe
-Ajout et supression de machine durant l'execution du programme (simulation de cas erreur)
-
-xterm -title id -e "echo a;sleep 5;"
