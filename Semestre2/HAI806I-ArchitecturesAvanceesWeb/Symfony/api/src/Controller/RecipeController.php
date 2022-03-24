@@ -8,7 +8,6 @@
 
 	
 	class RecipeController extends AbstractController{
-
 		public function search(String $name, String $author, int $difficulty, String $ingredient, float $price) : Array{
             $em = $this->getDoctrine()->getManager();
             $query = $em->createQuery(

@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
     @ApiResource(
@@ -12,8 +14,9 @@ use ApiPlatform\Core\Annotation\ApiResource;
         "connection"={"route_name"="user_connection"},
         "register"={"route_name"="user_register"}
     },
-    itemOperations = {}
-    )
+    itemOperations = {
+    	"get"={"method"="GET"}
+    })
  * @ORM\Table(options={"collate"="utf8_general_ci", "charset": "UTF8"})
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
@@ -55,6 +58,17 @@ class User
      * @ORM\OneToMany(targetEntity="App\Entity\Recipe", mappedBy="user", orphanRemoval=false)
      */
     private $recipes;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Opinion", mappedBy="user", orphanRemoval=false)
+     */
+    private $opinions;    
+    
+    public function __construct()
+    {
+        $this->recipes = new ArrayCollection();
+        $this->opinions = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -117,6 +131,18 @@ class User
     public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
+    }
+    
+    public function getRecipes(): Collection
+    {
+        return $this->recipes;
+    }
+
+    public function setRecipes(Collection $recipes): self
+    {
+        $this->recipes = $recipes;
 
         return $this;
     }

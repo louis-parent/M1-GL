@@ -5,7 +5,8 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\OpinionRepository;
 use Doctrine\ORM\Mapping as ORM;
-
+use App\Entity\Recipe;
+use App\Entity\User;
 /**
  * @ApiResource(
 		collectionOperations={
@@ -14,7 +15,8 @@ use Doctrine\ORM\Mapping as ORM;
 			"post"={"method"="POST"}    
 		},
 		itemOperations={
-			"put"={"method"="PUT"}
+			"put"={"method"="PUT"},
+			"get"={"method"="GET"}
 		}
  * )
  * @ORM\Table(options={"collate"="utf8_general_ci", "charset": "UTF8"})
@@ -30,14 +32,16 @@ class Opinion
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Recipe", inversedBy="")
+     * @ORM\JoinColumn(name="recipe_id", referencedColumnName="id")
      */
-    private $recipeId;
+    private $recipe;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    private $email;
+    private $user;
 
     /**
      * @ORM\Column(type="integer")
@@ -53,6 +57,7 @@ class Opinion
      * @ORM\Column(type="date")
      */
     private $date;
+    
 
     public function getId(): ?int
     {
@@ -67,18 +72,6 @@ class Opinion
     public function setRecipeId(int $recipeId): self
     {
         $this->recipeId = $recipeId;
-
-        return $this;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
 
         return $this;
     }
@@ -115,6 +108,30 @@ class Opinion
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+    
+    public function getRecipe(): ?Recipe
+    {
+        return $this->recipe;
+    }
+
+    public function setRecipe(Recipe $recipe): self
+    {
+        $this->recipe = $recipe;
+
+        return $this;
+    }
+    
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
