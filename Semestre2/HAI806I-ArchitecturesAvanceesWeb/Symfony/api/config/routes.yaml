@@ -1,5 +1,5 @@
 recipe_search:
-    path: '/recipes/{name}/{author}/{difficulty}/{ingredient}/{price}'
+    path: '/api/recipes/{name}/{author}/{difficulty}/{ingredient}/{price}'
     methods: ['GET']
     defaults:
         _controller: '\App\Controller\RecipeController::search'
@@ -7,7 +7,7 @@ recipe_search:
         _api_collection_operation_name: 'recipes_routes'
 
 user_connection:
-    path: '/connection/{email}/{password}'
+    path: '/api/connection/{email}/{password}'
     methods: ['GET']
     defaults:
         _controller: '\App\Controller\UserController::connection'
@@ -15,7 +15,7 @@ user_connection:
         _api_collection_operation_name: 'connection'
 
 user_register:
-    path: '/register'
+    path: '/api/register'
     methods: ['POST']
     defaults:
         _controller: '\App\Controller\UserController::register'
@@ -23,7 +23,7 @@ user_register:
         _api_collection_operation_name: 'register'
         
 recipe_opinions:
-    path: '/opinions/{recipeId}'
+    path: '/api/opinions/{recipeId}'
     methods: ['GET']
     defaults:
         _controller: '\App\Controller\OpinionController::forRecipe'
@@ -31,7 +31,7 @@ recipe_opinions:
         _api_collection_operation_name: 'recipe_opinions'
         
 opinion_detail:
-    path: '/opinions/{email}/{recipeId}'
+    path: '/api/opinions/{email}/{recipeId}'
     methods: ['GET']
     defaults:
         _controller: '\App\Controller\OpinionController::getDetails'
