@@ -1,0 +1,39 @@
+recipe_search:
+    path: '/recipes/{name}/{author}/{difficulty}/{ingredient}/{price}'
+    methods: ['GET']
+    defaults:
+        _controller: '\App\Controller\RecipeController::search'
+        _api_resource_class: 'App\Entity\Recipe'
+        _api_collection_operation_name: 'recipes_routes'
+
+user_connection:
+    path: '/connection/{email}/{password}'
+    methods: ['GET']
+    defaults:
+        _controller: '\App\Controller\UserController::connection'
+        _api_resource_class: 'App\Entity\User'
+        _api_collection_operation_name: 'connection'
+
+user_register:
+    path: '/register'
+    methods: ['POST']
+    defaults:
+        _controller: '\App\Controller\UserController::register'
+        _api_resource_class: 'App\Entity\User'
+        _api_collection_operation_name: 'register'
+        
+recipe_opinions:
+    path: '/opinions/{recipeId}'
+    methods: ['GET']
+    defaults:
+        _controller: '\App\Controller\OpinionController::forRecipe'
+        _api_resource_class: 'App\Entity\Opinion'
+        _api_collection_operation_name: 'recipe_opinions'
+        
+opinion_detail:
+    path: '/opinions/{email}/{recipeId}'
+    methods: ['GET']
+    defaults:
+        _controller: '\App\Controller\OpinionController::getDetails'
+        _api_resource_class: 'App\Entity\Opinion'
+        _api_collection_operation_name: 'opinion_detail'

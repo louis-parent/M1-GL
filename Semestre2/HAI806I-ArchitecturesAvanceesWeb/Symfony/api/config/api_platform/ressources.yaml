@@ -1,0 +1,7 @@
+App\Entity\Recipe:
+    itemOperations:
+        get: ~
+        post_publication:
+            method: GET
+            path: /recipe/{recipeName}
+            controller: App\Controller\GetRecipeName
