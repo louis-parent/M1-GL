@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/announcement_item_image"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:minWidth="128dp"
+        android:minHeight="128dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_baseline_car_rental_24"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/announcement_item_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Renault Twingo 3"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintEnd_toStartOf="@+id/announcement_item_favorite"
+        app:layout_constraintStart_toEndOf="@+id/announcement_item_image"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/announcement_item_subtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="II (2) 0.9 TCE 95 INTENS"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/announcement_item_title"
+        app:layout_constraintTop_toBottomOf="@+id/announcement_item_title" />
+
+    <ImageView
+        android:id="@+id/announcement_item_favorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/announcement_item_title"
+        app:srcCompat="@drawable/ic_baseline_favorite_border_24" />
+
+    <TextView
+        android:id="@+id/announcement_item_price"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="10 990€"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#0C9187"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/announcement_item_subtitle"
+        app:layout_constraintTop_toBottomOf="@+id/announcement_item_subtitle" />
+
+    <TextView
+        android:id="@+id/announcement_item_place"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="31"
+        app:layout_constraintBottom_toBottomOf="@+id/announcement_item_place_icon"
+        app:layout_constraintStart_toEndOf="@+id/announcement_item_place_icon"
+        app:layout_constraintTop_toTopOf="@+id/announcement_item_place_icon" />
+
+    <ImageView
+        android:id="@+id/announcement_item_place_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/announcement_item_price"
+        app:layout_constraintTop_toBottomOf="@+id/announcement_item_price"
+        app:srcCompat="@drawable/ic_baseline_place_24" />
+
+    <ImageView
+        android:id="@+id/announcement_item_type_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/announcement_item_place_icon"
+        app:layout_constraintEnd_toEndOf="@+id/announcement_item_favorite"
+        app:srcCompat="@drawable/ic_baseline_sell_24" />
+
+    <TextView
+        android:id="@+id/announcement_item_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:text="To Sell"
+        android:textColor="#0C9187"
+        app:layout_constraintBottom_toBottomOf="@+id/announcement_item_type_icon"
+        app:layout_constraintEnd_toStartOf="@+id/announcement_item_type_icon"
+        app:layout_constraintTop_toTopOf="@+id/announcement_item_type_icon" />
+</androidx.constraintlayout.widget.ConstraintLayout>
