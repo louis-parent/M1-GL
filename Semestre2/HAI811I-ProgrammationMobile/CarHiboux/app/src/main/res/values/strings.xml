@@ -3,7 +3,7 @@
     <string name="home">Home</string>
     <string name="profile">Profile</string>
     <string name="announcements">Announcements</string>
-    <string name="notfications">Notfications</string>
+    <string name="notifications">Notifications</string>
     <string name="alerts">Alerts</string>
     <string name="statistics">Statistics</string>
     <string name="register">Register</string>
@@ -24,4 +24,14 @@
     <string name="birthdate">Birthdate</string>
     <string name="first_name">First Name</string>
     <string name="filter">Filter</string>
+    <string name="any">Any</string>
+    <string name="rent">Rent</string>
+    <string name="sell">Sell</string>
+    <string name="gasoline">Gasoline</string>
+    <string name="diesel">Diesel</string>
+    <string name="electric">Electric</string>
+    <string name="gas">Gas</string>
+    <string name="manual">Manual</string>
+    <string name="automatic">Automatic</string>
+    <string name="sequential">Sequential</string>
 </resources>

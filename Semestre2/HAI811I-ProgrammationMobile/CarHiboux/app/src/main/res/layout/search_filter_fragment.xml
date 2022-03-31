@@ -5,28 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageButton
+    <ImageView
         android:id="@+id/filter_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
-
-    <SearchView
-        android:id="@+id/filter_search"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/filter_back"
-        app:layout_constraintEnd_toStartOf="@+id/filter_search_button"
-        app:layout_constraintStart_toEndOf="@+id/filter_back"
-        app:layout_constraintTop_toTopOf="@+id/filter_back">
-
-    </SearchView>
 
     <ImageButton
         android:id="@+id/filter_search_button"
@@ -72,29 +59,7 @@
                     android:id="@+id/filter_type"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:checkedButton="@id/filter_type_any"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/filter_type_any"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Any" />
-
-                    <RadioButton
-                        android:id="@+id/filter_type_rent"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:text="Rent" />
-
-                    <RadioButton
-                        android:id="@+id/filter_type_sell"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:text="Sell" />
-                </RadioGroup>
+                    android:orientation="horizontal" />
             </LinearLayout>
 
             <LinearLayout
@@ -242,7 +207,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="0€"
+                        android:text="0km"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small" />
                 </LinearLayout>
 
@@ -276,10 +241,9 @@
                         android:id="@+id/filter_year_min"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:ems="4"
                         android:inputType="number"
-                        tools:text="1971" />
+                        android:text="1971" />
 
                     <TextView
                         android:id="@+id/filter_year_separator"
@@ -287,7 +251,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
-                        android:layout_weight="1"
                         android:gravity="center"
                         android:text="-" />
 
@@ -295,7 +258,6 @@
                         android:id="@+id/filter_year_max"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:ems="4"
                         android:inputType="number" />
                 </LinearLayout>
@@ -325,41 +287,8 @@
                     android:id="@+id/filter_energy"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:checkedButton="@id/filter_energy_any"
                     android:gravity="left"
-                    android:orientation="vertical">
-
-                    <RadioButton
-                        android:id="@+id/filter_energy_any"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Any" />
-
-                    <RadioButton
-                        android:id="@+id/filter_energy_gasoil"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Gasoil" />
-
-                    <RadioButton
-                        android:id="@+id/filter_energy_diesel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Diesel" />
-
-                    <RadioButton
-                        android:id="@+id/filter_energy_electric"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Electric" />
-
-                    <RadioButton
-                        android:id="@+id/filter_energy_gas"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Gas" />
-
-                </RadioGroup>
+                    android:orientation="vertical" />
             </LinearLayout>
 
             <LinearLayout
@@ -378,34 +307,7 @@
                 <RadioGroup
                     android:id="@+id/filter_gearbox"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:checkedButton="@id/filter_gearbox_any">
-
-                    <RadioButton
-                        android:id="@+id/filter_gearbox_any"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Any" />
-
-                    <RadioButton
-                        android:id="@+id/filter_gearbox_manual"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Manual" />
-
-                    <RadioButton
-                        android:id="@+id/filter_gearbox_automatic"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Automatic" />
-
-                    <RadioButton
-                        android:id="@+id/filter_gearbox_sequential"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Sequential" />
-
-                </RadioGroup>
+                    android:layout_height="match_parent" />
             </LinearLayout>
 
             <LinearLayout
@@ -426,10 +328,22 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="number"
-                    tools:text="1" />
+                    android:text="1" />
             </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
+
+    <EditText
+        android:id="@+id/filter_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textAutoCorrect"
+        android:text="Search.."
+        app:layout_constraintBottom_toBottomOf="@+id/filter_back"
+        app:layout_constraintEnd_toStartOf="@+id/filter_search_button"
+        app:layout_constraintStart_toEndOf="@+id/filter_back"
+        app:layout_constraintTop_toTopOf="@+id/filter_back" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
