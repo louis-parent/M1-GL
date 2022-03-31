@@ -1,0 +1,127 @@
+.container
+{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.column
+{
+	width: 66%;
+}
+
+.subtitle
+{
+	font-weight: bold;
+	font-size: 2.5em;
+	
+	text-align: center;
+	text-transform: capitalize;
+	
+	margin-bottom: 0.1em;
+}
+
+.message
+{
+	text-align: center;
+	margin-bottom: 3em;
+}
+
+.details
+{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-around;
+}
+
+.section
+{
+	color: var(--accent-color);
+	font-weight: bold;
+	font-size: 1.5em;
+	margin-top: 1.5em;
+}
+
+.accent-icon
+{
+	color: var(--accent-color);
+	font-size: 2em;
+	margin: 0 0.5em;
+}
+
+.persons
+{
+	border: var(--border-color) solid 1px;
+	border-radius: 2em;
+	
+	padding: 1em;
+}
+
+.ingredients
+{
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	justify-content: space-around;
+	flex-wrap: wrap;
+}
+
+.ingredient
+{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	
+	text-align: center;
+		
+	width: 128px;
+	margin: 1em;
+}
+
+.ingredient .icon
+{
+	font-size: 1.5em;
+	
+	padding: 0.5em;
+	
+	border: var(--border-color) solid 1px;
+	border-radius: 0.5em;
+}
+
+.ingredient .quantity
+{
+	text-align: center;
+	font-weight: bold;
+}
+
+.ingredient .name
+{
+	text-transform: lower;
+	text-decoration: underline;
+}
+
+.steps h4
+{
+	font-weight: bold;
+	margin-bottom: 0.25em;
+}
+
+.about
+{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.little
+{
+	font-size: 0.7em;
+}
+
+.little > span
+{
+	padding: 0 0.66em;
+}

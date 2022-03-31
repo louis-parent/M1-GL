@@ -1,0 +1,17 @@
+<header>
+	<h1 class="title" routerLink="/" routerLinkActive="active">Marmiton</h1>
+
+	<research-bar></research-bar>
+	
+	<nav>
+		<button *ngIf="user === null" class="cta accent" routerLink="/login" routerLinkActive="active">Connexion</button>
+
+		<button *ngIf="user != null"class="cta accent" routerLink="/addRecipe" routerLinkActive="active">Proposer recette</button>
+		<button *ngIf="user != null" (click)="disconnect()" class="cta">Se deconnecter</button>
+	</nav>
+
+</header>
+
+<main>
+	<router-outlet></router-outlet>
+</main>

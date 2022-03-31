@@ -1,0 +1,45 @@
+.root
+{
+	position: relative;
+}
+
+.advance-menu
+{
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	
+	transform: translateX(-50%);
+	
+	width: 100%;
+	
+	padding: 0.75em;
+	
+	background: white;
+	
+	border: var(--border-color) solid 1px;
+	border-radius: 1em;
+	
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.advance-menu label
+{
+	width: 100%;
+	
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: center;
+	
+	margin-bottom: 1em;
+}
+
+.advance-menu label input
+{
+	width: 100%;
+	margin-top: 0.25em;
+}

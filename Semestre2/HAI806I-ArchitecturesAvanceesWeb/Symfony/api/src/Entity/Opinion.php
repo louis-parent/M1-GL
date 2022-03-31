@@ -64,18 +64,6 @@ class Opinion
         return $this->id;
     }
 
-    public function getRecipeId(): ?int
-    {
-        return $this->recipeId;
-    }
-
-    public function setRecipeId(int $recipeId): self
-    {
-        $this->recipeId = $recipeId;
-
-        return $this;
-    }
-
     public function getScore(): ?int
     {
         return $this->score;

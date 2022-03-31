@@ -1,0 +1,21 @@
+<div class="container">
+	<div class="links">
+		<span class="link disabled" routerLink="/login" routerLinkActive="active">SE CONNECTER</span>
+		<span class="link activated">S'INSCRIRE</span>
+	</div>
+	
+	<span class="message top">Rejoignez la communauté Marmiton !</span>
+	
+	<form class="form-card" (submit)="register()">
+		<input #firstname class="underlined" placeholder="Prénom*" type="text"/>
+		<input #lastname class="underlined" placeholder="Nom*" type="text"/>
+		<input #nickname class="underlined" placeholder="Pseudo*" type="text"/>
+		<input #email class="underlined" placeholder="Email*" type="email"/>
+		<input #password class="underlined" placeholder="Mot de passe*" type="password"/>
+		<input #passwordconfirm class="underlined" placeholder="Confirmation mot de passe*" type="password"/>
+	</form>
+
+	<small #error class="error message"> </small>
+
+	<button class="cta accent" (click)="register()">C'EST PARTI !</button>
+</div>

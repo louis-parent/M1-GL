@@ -1,0 +1,17 @@
+<div class="container">
+	<div class="links">
+		<span class="link activated">SE CONNECTER</span>
+		<span class="link disabled" routerLink="/register" routerLinkActive="active">S'INSCRIRE</span>
+	</div>
+	
+	<span class="message top">Nous sommes heureux de vous revoir !</span>
+	
+	<form class="form-card" (submit)="connect()">
+		<input #email class="underlined" placeholder="Email" type="text" name="email"/>
+		<input #password class="underlined" placeholder="Mot de passe" type="password" name = "password"/>
+	</form>
+
+	<small #error class="error message"> </small>
+
+	<button class="cta accent" (click)="connect()">C'EST PARTI !</button>
+</div>

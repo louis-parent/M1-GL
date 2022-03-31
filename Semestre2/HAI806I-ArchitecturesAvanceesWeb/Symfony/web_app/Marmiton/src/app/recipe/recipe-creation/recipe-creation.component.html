@@ -1,0 +1,52 @@
+<div class="container">
+	<h2>Nouvelle recette</h2>
+	<form class="form-card" (submit)="addRecipe()">
+		<input #title class="underlined" placeholder="Titre*" type="text"/>
+		<input #cookingMode class="underlined" placeholder="Cuisson*" type="text"/>
+		<input #quantityPerson class="underlined" placeholder="Nombre de personnes*" type="number" min="1" />
+		<input #difficulty class="underlined" placeholder="Difficulté*" type="number" min="1" max="5"/>
+	</form>
+
+	<div class="section">		
+		<h3 class="section-title">Ingrédients</h3>
+		<button class="cta" (click)="addIngredient()">Ajouter</button>
+	</div>
+	
+    <div *ngFor="let ingredient of ingredients" class="ingredients">
+        
+		<input #nameIngredient class="underlined" placeholder="Nom*" type="text" value="{{ingredient.name}}">
+			
+		<span>:</span>
+		
+		<span>
+			<input #quantityIngredient class="underlined short" placeholder="Quantité*" type="number" value="{{ingredient.quantity}}">
+				
+			<select #unitIngredient class="underlined" value="{{ingredient.unit}}">
+			    <option value="kg">kilogramme</option>
+			    <option value="l">litre</option>
+			    <option value="unit">unité</option>
+			</select>
+		</span>
+		<span>pour un total de</span>	
+			
+		<span>
+		    <input #priceIngredient class="underlined short" placeholder="Prix Estimé*" type="number" value="{{ingredient.price}}">	
+			<span>€</span>
+		</span>
+			
+		<button class="link activated shy"  (click)="removeIngredient(ingredient)">Retirer</button>        
+    </div>
+
+	<div class="section">		
+		<h3 class="section-title">Etapes</h3>
+		<button class="cta" (click)="addStep()">Ajouter</button>
+	</div>
+				
+    <div *ngFor="let step of steps">
+		<input #step class="underlined" placeholder="Etape*" value="{{step}}" type="text"/>
+        <button class="link activated shy" (click)="removeStep(step)">Retirer</button>
+    </div>
+
+	<small #error class="error message"> </small>
+	<button class="cta accent" (click)="addRecipe()">PARTAGER !</button>
+</div>

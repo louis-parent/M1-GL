@@ -1,0 +1,15 @@
+<div class="opinion-create">
+    <label>
+		Noter : <br/>
+	   <input #score class="simple" type="number" min="0" max="5" name="score"/>
+	</label>
+		
+    <label>
+		Commenter :<br/>
+		<input #comments class="simple" type="text" name="comment"/>
+	</label>
+
+    <button class="cta accent" (click)="sendOpinion()">Envoyer</button>
+	
+	<p #error class="error"></p>
+</div>

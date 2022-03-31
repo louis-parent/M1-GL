@@ -1,0 +1,57 @@
+.container
+{
+	width: 100%;
+	
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	
+	padding: 3em;
+}
+
+.form-card
+{
+	width: 66%;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.form-card > input
+{
+	margin-bottom: 0.5em;
+}
+
+.cta.accent
+{
+	font-size: 1.1em;
+}
+
+.message
+{
+	font-weight: bold;
+	text-align: center;
+	width: 66%;
+	
+	min-height: 2em;
+}
+
+.message.top
+{
+	margin-bottom: 1em;
+}
+
+.links
+{
+	width: 66%;
+	
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-around;
+	
+	margin-bottom: 2em;
+	
+	font-size: 1.1em;
+}

@@ -1,0 +1,72 @@
+.container
+{
+	width: 100%;
+	
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	
+	padding: 3em;
+}
+
+.form-card
+{
+	width: 66%;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.form-card > input
+{
+	margin-bottom: 0.5em;
+}
+
+.cta.accent
+{
+	font-size: 1.1em;
+}
+
+.message
+{
+	font-weight: bold;
+	text-align: center;
+	width: 66%;
+	
+	min-height: 2em;
+}
+
+.section-title
+{
+	color: var(--accent-color);
+	font-weight: bold;
+	font-size: 1.5em;
+	margin-top: 1.5em;
+}
+
+.section
+{
+	width: 50%;
+	
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.ingredients
+{
+	width: 100%;
+	
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+
+input.short
+{
+	max-width: 4.5em;
+}

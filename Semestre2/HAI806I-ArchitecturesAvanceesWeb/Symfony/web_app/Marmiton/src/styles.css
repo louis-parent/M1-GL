@@ -1,0 +1,147 @@
+:root
+{
+    margin: 0;
+    padding: 0;
+    
+    font-family: 'Roboto', sans-serif;
+        
+    --accent-color: #F2AB27;
+    --border-color: rgba(0, 0, 0, 0.2);
+    --background-color: #EFEFEF;
+}
+
+*
+{
+    box-sizing:border-box;
+}
+
+html,body, app-root
+{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+body
+{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	background: var(--background-color);
+}
+
+.title
+{
+	color: var(--accent-color);
+}
+
+button
+{
+	cursor: pointer;
+}
+
+button.cta
+{
+	background: white;
+	border: var(--accent-color) 1px solid;
+	color: var(--accent-color);
+	border-radius: 3em;
+	padding: 1em;
+}
+
+button.cta.accent
+{
+	background: var(--accent-color);
+	color: white;
+}
+
+input.simple
+{
+	border: var(--border-color) 1px solid;
+	border-radius: 1em;
+	
+	padding: 0.5em;
+}
+
+input.underlined
+{
+	background: none;
+	border: none;
+	
+	border-bottom: var(--border-color) solid 1px;
+	
+	padding: 0.3em 0.6em;
+	
+	font-size: 1.2em;
+}
+
+.link
+{
+	padding: 0 1em;
+	font-weight: bold;	
+	
+	border: none;
+	background: none;
+	
+	cursor: pointer;
+}
+
+.link.disabled
+{
+	color: lightgray;
+}
+
+.link.activated
+{
+	color: var(--accent-color);
+	border-bottom: var(--accent-color) solid 2px;
+}
+
+.link.activated.shy
+{
+	border-bottom: none;
+}
+
+.error
+{
+	color: #BF0404;
+	margin: 0.5em 0;
+}
+
+.capitalize
+{
+	text-transform: capitalize;
+}
+
+.row
+{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.field-and-button
+{
+	display: block;
+	 	
+	padding: 0.25em;
+	
+	border: var(--border-color) 1px solid;
+	border-radius: 1em;	
+}
+
+.field-and-button * 
+{
+	border: none;
+	background: none;
+	
+	font-size: 1.5em;
+}
+
+.field-and-button .splitted
+{
+	border-left: var(--border-color) 1px solid;
+	padding-left: 0.3em;
+}

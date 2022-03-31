@@ -1,0 +1,23 @@
+<div *ngIf="!isEditMode" class="opinion">
+	<div class="header">
+		<div class="header-start">
+			<div class="icon">{{ opinion.nickname[0] }}</div>
+			<div class="data">
+				<span class="email">{{opinion.nickname}}</span>
+				<opinion-score [score]="opinion.score"></opinion-score>
+			</div>
+		</div>
+		
+		<button *ngIf="condButton && !isEditMode" class="cta" (click)="editOpinion()">Modifier</button>
+	</div>
+
+	<small class="date">{{dateLocaleFormat(opinion.date)}}</small>
+	<p class="comment">{{opinion.comments}}</p>
+</div>
+
+<opinion-editor  
+    *ngIf="isEditMode"
+    [recipeId]="recipeId"
+    [newOpinion]=false
+    (changeRequest)="changeItem()">
+</opinion-editor>

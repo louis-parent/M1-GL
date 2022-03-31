@@ -1,0 +1,49 @@
+<div class="container">	
+	<h2 class="subtitle column">{{recipe.name}}</h2>
+	<div class="about message column">
+		<small>Note moyenne : <opinion-score [score]="recipe.average"></opinion-score></small>	
+		<small>Recette par {{recipe.nickname}}</small>
+	</div>
+	
+	<div class="details column">
+		<span class="row"><span class="accent-icon">🔥</span> <span class="capitalize">{{recipe.cookingMode}}</span></span>
+		<span>•</span>
+		<span class="row"><span class="accent-icon">👨‍🍳</span> {{recipe.difficulty}} / 5</span>
+		<span>•</span>
+		<span class="row"><span class="accent-icon">💰</span> {{currencyFormater.format(recipe.price)}}</span>
+	</div>
+	
+	<h3 class="section column">Ingrédients</h3>
+	
+	<div class="row column">		
+		<!--<div class="persons">{{recipe.quantityPerson}} Personnes</div>-->
+		<div class="field-and-button little" for="person">
+			<button (click)="decrPerson()">-</button>
+			<span class="splitted">{{person}} personnes </span>
+			<button class="splitted" (click)="incrPerson()">+</button>
+		</div>
+	</div>
+	
+	
+	<div class="ingredients column">
+		<div *ngFor="let ingredient of recipe.ingredients" class="ingredient">
+			<span *ngIf="ingredient.unit == 'kg'" class="icon">🍞</span>
+			<span *ngIf="ingredient.unit == 'l'" class="icon">🍶</span>
+			<span *ngIf="ingredient.unit == 'unit'" class="icon">🥚</span>
+			
+			<span class="quantity">{{quantityFormater.format(getQuantityForPerson(ingredient.quantity))}} {{ingredient.unit}}</span>
+			<span>de <span class="name">{{ingredient.name}}</span></span>
+		</div>
+	</div>
+	
+	<h3 class="section column">Préparation</h3>
+	
+	<div *ngFor="let step of recipe.steps; index as i" class="steps column">
+		<h4>Étape {{i+1}} :</h4>
+		<p>{{step}}</p>
+	</div>
+	
+    <h3 class="section column">Opinions</h3>
+
+    <opinion-list class="column" [recipeId]="recipeId"></opinion-list>
+</div>

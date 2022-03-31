@@ -1,0 +1,18 @@
+<div class="opinions">
+  <opinion-item
+	*ngFor="let opinion of opinions"
+    [recipeId]="opinion.recipeId" 
+    [email]="opinion.email"
+    (changeRequest)="loadListOpinion()">
+  </opinion-item>
+</div>
+
+<div *ngIf="userConnected && !alreadyCommented">
+  <h2 class="section">Ajouter un avis</h2>
+
+  <opinion-editor  
+    [recipeId]="recipeId"
+    [newOpinion]=true
+    (changeRequest)="loadListOpinion()">
+  </opinion-editor>
+</div>

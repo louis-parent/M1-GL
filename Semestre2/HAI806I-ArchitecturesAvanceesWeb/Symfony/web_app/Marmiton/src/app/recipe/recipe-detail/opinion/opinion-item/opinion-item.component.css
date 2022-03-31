@@ -1,0 +1,72 @@
+.opinion
+{
+	width: 100%;
+	
+	padding-bottom: 0.5em;
+	margin-bottom: 1.5em;
+	
+	border-bottom: var(--border-color) 1px solid;
+}
+
+.opinion .header
+{
+	width: 100%;
+	
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;	
+}
+
+.opinion .header-start
+{	
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-start;	
+}
+
+.opinion .data
+{
+	height: 100%;
+	
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: space-between;
+}
+
+.opinion .icon
+{
+	width: 48px;
+	height: 48px;
+	
+	padding: 1em;
+	margin: 0 0.5em 0.5em 0;
+	
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	
+	color: var(--accent-color);
+	border: var(--accent-color) solid 1px;
+	border-radius: 50%;
+	
+	text-transform: uppercase;
+}
+
+.opinion .email
+{
+	font-weight: bold;
+}
+
+.opinion .date
+{
+	font-style: italic;
+}
+
+.header .cta
+{
+	margin-left: 2em;
+}

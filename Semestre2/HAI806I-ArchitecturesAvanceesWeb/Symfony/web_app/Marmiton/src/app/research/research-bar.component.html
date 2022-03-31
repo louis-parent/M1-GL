@@ -1,0 +1,17 @@
+<div class="root">
+    <label class="field-and-button" for="search">
+		<button title="Rechercher" (click)="research()">🔎</button>
+		<input #name id="search" placeholder="Je cherche..." type="search" (keyup)="searchKeyPressed($event)"/>
+		<button class="splitted" title="Recherche Avancée" (click)="switchAdvanceResearch()">🧰</button>
+	</label>
+
+    <div *ngIf="advanceResearch" class="advance-menu">    
+        <label>Auteur:<input #author class="simple" type="text"/></label>
+
+        <label>Difficultés:<input #difficulty class="simple" type="number" min="1" max="5"/></label>
+
+        <label>Ingredient:<input #ingredient class="simple" type="text"/></label>
+
+        <label>Prix:<input #price class="simple" type="number" min="0"/></label>
+    </div>
+</div>

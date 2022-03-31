@@ -1,0 +1,35 @@
+header
+{
+	padding: 1%;
+	
+	background: white;
+	
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    
+    box-shadow: rgba(0, 0, 0, 0.2) 0 5px 5px;
+}
+
+header h1
+{
+ 	cursor: pointer;
+}
+
+header nav > *:not(:last-child)
+{
+	margin-right: 1em;
+}
+
+main
+{
+	min-height: 80%;
+
+	margin: 0 25%;
+		
+	border-radius: 0.75em;
+	box-shadow: rgba(0, 0, 0, 0.1) 0 0 50px;
+	
+	background: white;
+}
