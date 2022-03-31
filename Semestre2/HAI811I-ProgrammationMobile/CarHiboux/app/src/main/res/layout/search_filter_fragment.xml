@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageButton
+        android:id="@+id/filter_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
+
+    <SearchView
+        android:id="@+id/filter_search"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/filter_back"
+        app:layout_constraintEnd_toStartOf="@+id/filter_search_button"
+        app:layout_constraintStart_toEndOf="@+id/filter_back"
+        app:layout_constraintTop_toTopOf="@+id/filter_back">
+
+    </SearchView>
+
+    <ImageButton
+        android:id="@+id/filter_search_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintBottom_toBottomOf="@+id/filter_search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/filter_search"
+        app:srcCompat="@drawable/ic_baseline_search_24" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/filter_search">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="32dp"
+            android:paddingRight="32dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="left"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/filter_type_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Announcement Type :"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                <RadioGroup
+                    android:id="@+id/filter_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:checkedButton="@id/filter_type_any"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/filter_type_any"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Any" />
+
+                    <RadioButton
+                        android:id="@+id/filter_type_rent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:text="Rent" />
+
+                    <RadioButton
+                        android:id="@+id/filter_type_sell"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:text="Sell" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/filter_brand_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Brand :"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                    <EditText
+                        android:id="@+id/filter_brand"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="textPersonName" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/filter_model_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Model :"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                    <EditText
+                        android:id="@+id/filter_model"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="textPersonName" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="left"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/filter_max_price_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Max Price :"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                    <TextView
+                        android:id="@+id/filter_max_price_preview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="0€"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                </LinearLayout>
+
+                <SeekBar
+                    android:id="@+id/filter_max_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="left"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/filter_min_price_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Min Price :"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                    <TextView
+                        android:id="@+id/filter_min_price_preview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="0€"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                </LinearLayout>
+
+                <SeekBar
+                    android:id="@+id/filter_min_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="left"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/filter_max_kilometer_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Max Kilometers :"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                    <TextView
+                        android:id="@+id/filter_max_kilometer_preview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="0€"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                </LinearLayout>
+
+                <SeekBar
+                    android:id="@+id/filter_max_kilometer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/filter_year_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Year :"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/filter_year_min"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="4"
+                        android:inputType="number"
+                        tools:text="1971" />
+
+                    <TextView
+                        android:id="@+id/filter_year_separator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="-" />
+
+                    <EditText
+                        android:id="@+id/filter_year_max"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="4"
+                        android:inputType="number" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/filter_technical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Must have Technical Control" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/filter_energy_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Energy :"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                <RadioGroup
+                    android:id="@+id/filter_energy"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:checkedButton="@id/filter_energy_any"
+                    android:gravity="left"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/filter_energy_any"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Any" />
+
+                    <RadioButton
+                        android:id="@+id/filter_energy_gasoil"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Gasoil" />
+
+                    <RadioButton
+                        android:id="@+id/filter_energy_diesel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Diesel" />
+
+                    <RadioButton
+                        android:id="@+id/filter_energy_electric"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Electric" />
+
+                    <RadioButton
+                        android:id="@+id/filter_energy_gas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Gas" />
+
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/filter_gearbox_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Gearbox :"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                <RadioGroup
+                    android:id="@+id/filter_gearbox"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:checkedButton="@id/filter_gearbox_any">
+
+                    <RadioButton
+                        android:id="@+id/filter_gearbox_any"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Any" />
+
+                    <RadioButton
+                        android:id="@+id/filter_gearbox_manual"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Manual" />
+
+                    <RadioButton
+                        android:id="@+id/filter_gearbox_automatic"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Automatic" />
+
+                    <RadioButton
+                        android:id="@+id/filter_gearbox_sequential"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Sequential" />
+
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/filter_places_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Min Places :" />
+
+                <EditText
+                    android:id="@+id/filter_places"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="number"
+                    tools:text="1" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
