@@ -1,5 +1,6 @@
 package fr.umontpellier.carhiboux.fragment.filter
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -29,16 +30,30 @@ class FilterFragment : Fragment()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
     {
         val view : View = inflater.inflate(R.layout.search_filter_fragment, container, false)
+        initListeners(view)
+
         view.findViewById<EditText>(R.id.filter_year_max).setText(Calendar.getInstance().get(Calendar.YEAR).toString())
-        setSeekBarValue(R.id.filter_max_kilometer, Double.MAX_VALUE, view)
+        initSeekBar(view, R.id.filter_min_price, 0, SearchFilters.PRICE_MAX_VALUE)
+        initSeekBar(view, R.id.filter_max_price, 0, SearchFilters.PRICE_MAX_VALUE, SearchFilters.PRICE_MAX_VALUE)
+        initSeekBar(view, R.id.filter_max_kilometer, 0, SearchFilters.KILOMETERS_MAX_VALUE, SearchFilters.KILOMETERS_MAX_VALUE)
 
         initAnnouncementTypes(view)
         initEnergies(view)
         initGearboxes(view)
-        initListeners(view)
         initDefaultFilters(view)
 
         return view
+    }
+
+    private fun initSeekBar(view: View, id : Int, min: Int, max: Int, defaultProgress: Int = 0)
+    {
+        val bar : SeekBar = view.findViewById(id)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            bar.min = min
+        }
+        bar.max = max
+        bar.progress = defaultProgress
     }
 
     private fun initAnnouncementTypes(view: View)
@@ -94,6 +109,43 @@ class FilterFragment : Fragment()
         view.findViewById<ImageButton>(R.id.filter_search_button).setOnClickListener {
             findNavController().navigate(R.id.from_filters_to_announcement_list, bundleOf(FILTERS_KEY to getFilters()))
         }
+
+        view.findViewById<ImageButton>(R.id.filter_search_cancel).setOnClickListener {
+            findNavController().navigate(R.id.from_filters_to_announcement_list)
+        }
+
+        view.findViewById<SeekBar>(R.id.filter_min_price).setOnSeekBarChangeListener(object :
+            SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(bar: SeekBar?, progress: Int, byUser: Boolean)
+            {
+                view.findViewById<TextView>(R.id.filter_min_price_preview).text = "" + progress + "€"
+            }
+
+            override fun onStartTrackingTouch(p0: SeekBar?) {}
+            override fun onStopTrackingTouch(p0: SeekBar?) {}
+        })
+
+        view.findViewById<SeekBar>(R.id.filter_max_price).setOnSeekBarChangeListener(object :
+            SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(bar: SeekBar?, progress: Int, byUser: Boolean)
+            {
+                view.findViewById<TextView>(R.id.filter_max_price_preview).text = "" + progress + "€"
+            }
+
+            override fun onStartTrackingTouch(p0: SeekBar?) {}
+            override fun onStopTrackingTouch(p0: SeekBar?) {}
+        })
+
+        view.findViewById<SeekBar>(R.id.filter_max_kilometer).setOnSeekBarChangeListener(object :
+            SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(bar: SeekBar?, progress: Int, byUser: Boolean)
+            {
+                view.findViewById<TextView>(R.id.filter_max_kilometer_preview).text = "" + progress + "km"
+            }
+
+            override fun onStartTrackingTouch(p0: SeekBar?) {}
+            override fun onStopTrackingTouch(p0: SeekBar?) {}
+        })
     }
 
     private fun getFilters() : SearchFilters

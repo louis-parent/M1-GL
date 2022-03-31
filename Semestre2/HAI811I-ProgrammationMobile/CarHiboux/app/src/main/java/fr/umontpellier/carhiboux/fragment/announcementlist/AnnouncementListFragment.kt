@@ -27,10 +27,16 @@ class AnnouncementListFragment : Fragment()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
     {
         val view : View = inflater.inflate(R.layout.announcement_list_fragment, container, false)
-        view.findViewById<ListView>(R.id.announcement_list).adapter = AnnouncementListAdapter()
-        
-        initMark(view)
         initListeners(view)
+
+        view.findViewById<ListView>(R.id.announcement_list).adapter = AnnouncementListAdapter()
+
+        if(filters != null)
+        {
+            view.findViewById<EditText>(R.id.announcement_list_search).setText(filters?.search)
+        }
+
+        initMark(view)
 
         return view
     }

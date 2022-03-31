@@ -14,7 +14,7 @@ class SearchFilters(
     val brand: String? = null,
     val model: String? = null,
     val maxPrice: Double = Double.MAX_VALUE,
-    val minPrice: Double = Double.MAX_VALUE,
+    val minPrice: Double = Double.MIN_VALUE,
     val maxKilometers: Double = Double.MAX_VALUE,
     val minYear: Int = 1971,
     val maxYear: Int = Calendar.getInstance().get(Calendar.YEAR),
@@ -26,6 +26,9 @@ class SearchFilters(
 {
     companion object
     {
+        const val KILOMETERS_MAX_VALUE : Int = 500000
+        const val PRICE_MAX_VALUE : Int = 9999999
+
         fun searchWithFilters(search: String?, filters: SearchFilters) : SearchFilters
         {
             return SearchFilters(
