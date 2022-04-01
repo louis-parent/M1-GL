@@ -15,6 +15,8 @@ import fr.umontpellier.carhiboux.entity.enumeration.AnnouncementType
 import fr.umontpellier.carhiboux.entity.enumeration.Energy
 import fr.umontpellier.carhiboux.entity.enumeration.Gearbox
 import java.util.*
+import kotlin.math.max
+import kotlin.math.min
 
 class FilterFragment : Fragment()
 {
@@ -119,6 +121,12 @@ class FilterFragment : Fragment()
             override fun onProgressChanged(bar: SeekBar?, progress: Int, byUser: Boolean)
             {
                 view.findViewById<TextView>(R.id.filter_min_price_preview).text = "" + progress + "€"
+
+                if (bar != null)
+                {
+                    val max : SeekBar = view.findViewById(R.id.filter_max_price)
+                    max.progress = max(max.progress, bar.progress)
+                }
             }
 
             override fun onStartTrackingTouch(p0: SeekBar?) {}
@@ -130,6 +138,12 @@ class FilterFragment : Fragment()
             override fun onProgressChanged(bar: SeekBar?, progress: Int, byUser: Boolean)
             {
                 view.findViewById<TextView>(R.id.filter_max_price_preview).text = "" + progress + "€"
+
+                if(bar != null)
+                {
+                    val min : SeekBar = view.findViewById(R.id.filter_min_price)
+                    min.progress = min(min.progress, bar.progress)
+                }
             }
 
             override fun onStartTrackingTouch(p0: SeekBar?) {}
