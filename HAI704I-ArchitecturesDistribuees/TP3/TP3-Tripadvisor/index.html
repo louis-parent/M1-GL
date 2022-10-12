@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<title>TripAdvisor</title>
+		<meta charset="UTF-8" />
+		
+		<link rel="stylesheet" href="common.css" />
+		<script src="AgencyFetcher.js"></script>
+	</head>
+	<body>
+		<h1>TripAdvisor</h1>
+		<form id="search" target="">
+			<fieldset>
+				<legend>Recherche</legend>
+				
+				<div>					
+					<label>
+						Ville :					
+						<input type="text" name="city" value="Collioure" />
+					</label>
+					
+					<label>
+						Nombre de personnes :					
+						<input type="number" name="persons" min="1" max="99" step="1" value="1" />
+					</label>
+					
+					<label>
+						Nombre d'étoiles(min) :					
+						<input type="number" name="stars" min="0" max="5" step="1" value="0" />
+					</label>
+				</div>
+				
+				<div>
+					<label>
+						Début du séjour :					
+						<input type="date" name="start" value="2021-12-14" />
+					</label>
+					
+					<label>
+						Fin du séjour :			
+						<input type="date" name="end" value="2022-01-01" />
+					</label>					
+				</div>
+				
+					
+				<input type="submit" value="Rechercher" />
+			</fieldset>
+		</form>
+			
+		<main id="offer-list">
+			<div class="offer">
+				<img class="hotel-image" alt="Image" src=""/>
+				
+				<div class="offer-body">
+					<h2 class="offer-header"><span class="hotel-name"></span> - <span class="hotel-stars"></span></h2>
+					<h3 class="hotel-address"></h3>
+					<span class="hotel-persons"></span>				
+				</div>
+				
+				<div class="offer-footer">
+					<h3 class="agency-name"></h3>
+					<span class="agency-price"></span>
+				</div>
+			</div>
+		</main>
+	</body>
+</html>
